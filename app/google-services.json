@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "406172523296",
+    "firebase_url": "https://track-a-thon-166703.firebaseio.com",
+    "project_id": "track-a-thon-166703",
+    "storage_bucket": "track-a-thon-166703.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:406172523296:android:a463e7e5ec570706",
+        "android_client_info": {
+          "package_name": "com.trackathon.utn.track_a_thon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "406172523296-in6b5d0h71cet252aj3leapnljqlce6n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.trackathon.utn.track_a_thon",
+            "certificate_hash": "a8d9d0e4e2b99974953fc61eef027af4a9a7d4af"
+          }
+        },
+        {
+          "client_id": "406172523296-5gn0pg66jj7amg011d3go88k08sngqn9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsHHM4RJJCL0OuTeOEZGZ8wy7SdsESvhs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "406172523296-5gn0pg66jj7amg011d3go88k08sngqn9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
