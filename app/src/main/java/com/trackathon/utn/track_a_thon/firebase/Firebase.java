@@ -20,8 +20,11 @@ public class Firebase {
         return FirebaseDatabase.getInstance().getReference().child("races");
     }
 
-    private static DatabaseReference runner(String race, String runner) {
-        return FirebaseDatabase.getInstance().getReference().child("tracker").child(race).child(runner);
+    private static DatabaseReference trackers(String race, String runner) {
+        return FirebaseDatabase.getInstance().getReference()
+                .child("trackers")
+                .child(race)
+                .child(runner);
     }
 
     public static void allRaces(Consumer<List<Race>> callback) {
@@ -29,10 +32,18 @@ public class Firebase {
     }
 
     public static void setNewLocation(String race, String runner, Location newLocation) {
-        DatabaseReference runnerRef = runner(race, runner);
-
+        DatabaseReference runnerRef = trackers(race, runner);
         runnerRef.child("lat").setValue(newLocation.getLatitude());
         runnerRef.child("long").setValue(newLocation.getLongitude());
+    }
+
+    public static void registerRunner(String race, String runner) {
+        races().child(race).child("runners").child(runner).setValue(1);
+    }
+
+    public static void unregisterRunner(String race, String runner) {
+        races().child(race).child("runners").child(runner).removeValue();
+        trackers(race, runner).removeValue();
     }
 
     private static class RaceEventListener implements ValueEventListener {
@@ -52,8 +63,10 @@ public class Firebase {
                 HashMap<String, Object> attributes = (HashMap<String, Object>) values;
                 Race newRace = new Race();
                 newRace.setName(name);
-                newRace.setRunners((Long) attributes.get("runners"));
-                newRace.setWatchers((Long) attributes.get("watchers"));
+                HashMap<String, Long> runners = (HashMap<String, Long>) attributes.getOrDefault("runners", new HashMap<>());
+                HashMap<String, Long> watchers = (HashMap<String, Long>) attributes.getOrDefault("watchers", new HashMap<>());
+                newRace.setRunners((long) runners.values().size());
+                newRace.setWatchers((long) watchers.values().size());
                 races.add(newRace);
             });
 
@@ -62,7 +75,6 @@ public class Firebase {
 
         @Override
         public void onCancelled(DatabaseError databaseError) {
-
         }
     }
 }

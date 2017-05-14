@@ -36,6 +36,12 @@ public class TrackingActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        unbindTrackingService();
+        super.onBackPressed();
+    }
+
     private void requestLocationPermission() {
         ActivityCompat.requestPermissions(this, new String[]{LOCATION_PERMISSION}, REQUEST_CODE_PERMISSION);
     }
@@ -60,7 +66,7 @@ public class TrackingActivity extends AppCompatActivity {
             trackButton.setText("Start");
             started = false;
         } else {
-            trackingService.start();
+            trackingService.start("Nike 10k", "Usain Bolt");
             trackButton.setText("Stop");
             started = true;
         }
@@ -69,6 +75,11 @@ public class TrackingActivity extends AppCompatActivity {
     private void bindTrackingService() {
         Intent bindIntent = new Intent(this, LocationReporterService.class);
         bindService(bindIntent, serviceConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    private void unbindTrackingService() {
+        trackingService.stop();
+        unbindService(serviceConnection);
     }
 
     private ServiceConnection serviceConnection = new ServiceConnection() {
