@@ -97,10 +97,14 @@ public class Firebase {
         }
 
         private void update (DataSnapshot dataSnapshot) {
-            String name = dataSnapshot.getKey();
-            HashMap<String, Double> hash = (HashMap<String, Double>) dataSnapshot.getValue();
-            LatLng loc = new LatLng(hash.get("latitude"), hash.get("longitude"));
-            callback.accept(new Runner(name, loc));
+            try {
+                String name = dataSnapshot.getKey();
+                HashMap<String, Double> hash = (HashMap<String, Double>) dataSnapshot.getValue();
+                LatLng loc = new LatLng(hash.get("latitude"), hash.get("longitude"));
+                callback.accept(new Runner(name, loc));
+            } catch (NullPointerException e) {
+                // FIXME
+            }
         }
 
         @Override
