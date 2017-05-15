@@ -54,11 +54,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Firebase.raceUpdates("Nike 10k", (runner) -> {
             if (runners.containsKey(runner.getName())) {
                 Marker marker = runners.get(runner.getName());
+                marker.showInfoWindow();
                 marker.setPosition(runner.getLocation());
                 marker.setTitle(runner.getName());
             } else {
                 MarkerOptions markerOption = new MarkerOptions().position(runner.getLocation()).title(runner.getName());
                 Marker marker = mMap.addMarker(markerOption);
+                marker.showInfoWindow();
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(runner.getLocation()));
                 mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
                 runners.put(runner.getName(), marker);
