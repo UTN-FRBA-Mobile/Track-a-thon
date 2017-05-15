@@ -8,3 +8,5 @@ El servicio brindará geo-posicionamiento en tiempo real de todos los corredores
 La información solicitada para el registro constará de un nombre de usuario único, y la respectiva contraseña.
 
 La aplicación estará disponible para la plataforma Android.
+
+Podes ver los mockups [acá!](https://mockingbot.com/app/PQymgtARUaMoxBBM4FhDp8sGTB6AZOJ#screen=s0DDF00A87A1494248641373)
