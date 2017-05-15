@@ -1,18 +1,25 @@
 package com.trackathon.utn.track_a_thon;
 
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.trackathon.utn.track_a_thon.firebase.Firebase;
+import com.trackathon.utn.track_a_thon.model.Runner;
+
+import java.util.HashMap;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private HashMap<String, Marker> runners;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +29,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        runners = new HashMap<>();
     }
+
 
 
     /**
@@ -36,12 +45,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+        UiSettings uiSettings = googleMap.getUiSettings();
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34.603722, -58.381592);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+        uiSettings.setZoomControlsEnabled(true);
+        uiSettings.setCompassEnabled(true);
+
+        mMap = googleMap;
+        Firebase.raceUpdates("Nike 10k", (runner) -> {
+            if (runners.containsKey(runner.getName())) {
+                Marker marker = runners.get(runner.getName());
+                marker.setPosition(runner.getLocation());
+                marker.setTitle(runner.getName());
+            } else {
+                MarkerOptions markerOption = new MarkerOptions().position(runner.getLocation()).title(runner.getName());
+                Marker marker = mMap.addMarker(markerOption);
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(runner.getLocation()));
+                mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+                runners.put(runner.getName(), marker);
+            }
+        });
+
+
     }
 }

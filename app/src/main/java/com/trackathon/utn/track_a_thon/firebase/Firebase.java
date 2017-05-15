@@ -2,12 +2,15 @@ package com.trackathon.utn.track_a_thon.firebase;
 
 import android.location.Location;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.trackathon.utn.track_a_thon.model.Race;
+import com.trackathon.utn.track_a_thon.model.Runner;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,10 +24,17 @@ public class Firebase {
     }
 
     private static DatabaseReference trackers(String race, String runner) {
+        return trackers(race).child(runner);
+    }
+
+    private static DatabaseReference trackers(String race) {
         return FirebaseDatabase.getInstance().getReference()
                 .child("trackers")
-                .child(race)
-                .child(runner);
+                .child(race);
+    }
+
+    public static void raceUpdates(String race, Consumer<Runner> callback) {
+        trackers(race).addChildEventListener(new RunnerEventListener(callback));
     }
 
     public static void allRaces(Consumer<List<Race>> callback) {
@@ -33,8 +43,8 @@ public class Firebase {
 
     public static void setNewLocation(String race, String runner, Location newLocation) {
         DatabaseReference runnerRef = trackers(race, runner);
-        runnerRef.child("lat").setValue(newLocation.getLatitude());
-        runnerRef.child("long").setValue(newLocation.getLongitude());
+        runnerRef.child("latitude").setValue(newLocation.getLatitude());
+        runnerRef.child("longitude").setValue(newLocation.getLongitude());
     }
 
     public static void registerRunner(String race, String runner) {
@@ -77,4 +87,44 @@ public class Firebase {
         public void onCancelled(DatabaseError databaseError) {
         }
     }
+
+    private static class RunnerEventListener implements ChildEventListener{
+
+        private Consumer<Runner> callback;
+
+        private RunnerEventListener(Consumer<Runner> callback) {
+            this.callback = callback;
+        }
+
+        private void update (DataSnapshot dataSnapshot) {
+            String name = dataSnapshot.getKey();
+            HashMap<String, Double> hash = (HashMap<String, Double>) dataSnapshot.getValue();
+            LatLng loc = new LatLng(hash.get("latitude"), hash.get("longitude"));
+            callback.accept(new Runner(name, loc));
+        }
+
+        @Override
+        public void onChildAdded(DataSnapshot dataSnapshot, String name) {
+            update(dataSnapshot);
+        }
+
+        @Override
+        public void onChildChanged(DataSnapshot dataSnapshot, String name) {
+            update(dataSnapshot);
+        }
+
+        @Override
+        public void onChildRemoved(DataSnapshot dataSnapshot) {
+        }
+
+        @Override
+        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+        }
+    }
+
+
 }
