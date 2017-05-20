@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:padding="16dp"
+    android:padding="1dp"
     >
 
     <android.support.v7.widget.CardView
@@ -10,47 +10,57 @@
         android:id="@+id/cv"
         >
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:orientation="horizontal"
+            android:padding="1dp"
             >
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:id="@+id/race_photo"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginRight="16dp"
                 />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/race_name"
-                android:layout_toRightOf="@+id/race_photo"
-                android:layout_alignParentTop="true"
-                android:textSize="30sp"
-                />
+                android:orientation="vertical"
+                >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/race_watchers"
-                android:layout_toRightOf="@+id/race_photo"
-                android:layout_below="@+id/race_name"
-                />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:textAlignment="textEnd"
+                    >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/race_runners"
-                android:layout_toRightOf="@+id/race_photo"
-                android:layout_below="@+id/race_watchers"
-                />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/race_watchers"
+                        android:gravity="right"
+                        />
 
-        </RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/race_runners"
+                        android:gravity="right"
+                        />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/race_name"
+                    android:textSize="30sp"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
 
     </android.support.v7.widget.CardView>
 

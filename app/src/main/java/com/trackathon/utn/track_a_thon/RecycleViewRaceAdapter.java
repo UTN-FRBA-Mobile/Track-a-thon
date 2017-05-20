@@ -34,7 +34,7 @@ public class RecycleViewRaceAdapter extends RecyclerView.Adapter<RecycleViewRace
         raceViewHolder.raceName.setText(races.get(position).getName());
         raceViewHolder.raceWatchers.setText(races.get(position).getWatchers().toString());
         raceViewHolder.raceRunners.setText(races.get(position).getRunners().toString());
-        raceViewHolder.racePhoto.setImageResource(R.drawable.ic_home_black_24dp);
+        raceViewHolder.racePhoto.setImageResource(R.mipmap.ic_race_logo);
     }
 
     @Override
