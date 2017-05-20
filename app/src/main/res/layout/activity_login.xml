@@ -30,7 +30,6 @@
                 android:layout_marginLeft="75dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="20dp"
-                android:layout_weight="0dp"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
                 android:src="@mipmap/logo_login" />
