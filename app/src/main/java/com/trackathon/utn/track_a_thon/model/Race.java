@@ -42,7 +42,4 @@ public class Race {
                 '}';
     }
 
-    public int getPhotoId() {
-        return 0;
-    }
 }
