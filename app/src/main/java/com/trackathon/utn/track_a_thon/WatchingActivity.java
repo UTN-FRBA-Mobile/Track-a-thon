@@ -1,5 +1,6 @@
 package com.trackathon.utn.track_a_thon;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,7 +29,11 @@ public class WatchingActivity extends AppCompatActivity {
         racesWatchers.setLayoutManager(racesLayout);
 
         Firebase.allRaces(races -> {
-            RecycleViewRaceAdapter adapter = new RecycleViewRaceAdapter(races);
+            RecycleViewRaceAdapter adapter = new RecycleViewRaceAdapter(races, (race) -> {
+                Intent intent = new Intent(WatchingActivity.this, MapsActivity.class);
+                intent.putExtra("RACE", race.getName());
+                startActivity(intent);
+            });
             racesWatchers.setAdapter(adapter);
         });
     }

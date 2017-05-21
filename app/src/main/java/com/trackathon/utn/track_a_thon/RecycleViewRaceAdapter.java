@@ -11,16 +11,19 @@ import android.widget.TextView;
 import com.trackathon.utn.track_a_thon.model.Race;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Created by federico on 5/20/17.
  */
 public class RecycleViewRaceAdapter extends RecyclerView.Adapter<RecycleViewRaceAdapter.RaceViewHolder> {
 
-    List<Race> races;
+    private Consumer<Race> onClick;
+    private List<Race> races;
 
-    public RecycleViewRaceAdapter(List<Race> races) {
+    public RecycleViewRaceAdapter(List<Race> races, Consumer<Race> onClick) {
         this.races = races;
+        this.onClick = onClick;
     }
 
     @Override
@@ -35,6 +38,7 @@ public class RecycleViewRaceAdapter extends RecyclerView.Adapter<RecycleViewRace
         raceViewHolder.raceWatchers.setText(races.get(position).getWatchers().toString());
         raceViewHolder.raceRunners.setText(races.get(position).getRunners().toString());
         raceViewHolder.racePhoto.setImageResource(R.drawable.ic_race);
+        raceViewHolder.cv.setOnClickListener((view) -> this.onClick.accept(races.get(position)));
     }
 
     @Override

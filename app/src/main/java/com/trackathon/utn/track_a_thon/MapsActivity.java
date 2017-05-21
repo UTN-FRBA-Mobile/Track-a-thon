@@ -1,5 +1,6 @@
 package com.trackathon.utn.track_a_thon;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
@@ -48,8 +49,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         uiSettings.setZoomControlsEnabled(true);
         uiSettings.setCompassEnabled(true);
 
+        Intent intent = this.getIntent();
+        String raceName = intent.getExtras().getString("RACE");
+
         mMap = googleMap;
-        Firebase.raceUpdates("Nike 10k", (runner) -> {
+        Firebase.raceUpdates(raceName, (runner) -> {
             if (runners.containsKey(runner.getName())) {
                 Marker marker = runners.get(runner.getName());
                 marker.showInfoWindow();
