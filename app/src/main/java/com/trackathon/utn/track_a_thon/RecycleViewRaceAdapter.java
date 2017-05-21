@@ -34,11 +34,14 @@ public class RecycleViewRaceAdapter extends RecyclerView.Adapter<RecycleViewRace
 
     @Override
     public void onBindViewHolder(RaceViewHolder raceViewHolder, int position) {
-        raceViewHolder.raceName.setText(races.get(position).getName());
-        raceViewHolder.raceWatchers.setText(races.get(position).getWatchers().toString());
-        raceViewHolder.raceRunners.setText(races.get(position).getRunners().toString());
+        Race race = races.get(position);
+
+        raceViewHolder.raceName.setText(race.getName());
+        raceViewHolder.raceRunnersCount.setText(String.valueOf(race.getRunners().size()));
+        raceViewHolder.raceWatchersCount.setText(String.valueOf(race.getWatchers().size()));
         raceViewHolder.racePhoto.setImageResource(R.drawable.ic_race);
-        raceViewHolder.cv.setOnClickListener((view) -> this.onClick.accept(races.get(position)));
+
+        raceViewHolder.cv.setOnClickListener((view) -> this.onClick.accept(race));
     }
 
     @Override
@@ -54,16 +57,16 @@ public class RecycleViewRaceAdapter extends RecyclerView.Adapter<RecycleViewRace
     public class RaceViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
         TextView raceName;
-        TextView raceWatchers;
-        TextView raceRunners;
+        TextView raceWatchersCount;
+        TextView raceRunnersCount;
         ImageView racePhoto;
 
         RaceViewHolder(View itemView) {
             super(itemView);
             cv = (CardView) itemView.findViewById(R.id.cv);
             raceName = (TextView) itemView.findViewById(R.id.race_name);
-            raceWatchers = (TextView) itemView.findViewById(R.id.race_watchers);
-            raceRunners = (TextView) itemView.findViewById(R.id.race_runners);
+            raceWatchersCount = (TextView) itemView.findViewById(R.id.race_watchers);
+            raceRunnersCount = (TextView) itemView.findViewById(R.id.race_runners);
             racePhoto = (ImageView) itemView.findViewById(R.id.race_photo);
         }
     }

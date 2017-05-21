@@ -1,34 +1,28 @@
 package com.trackathon.utn.track_a_thon.model;
 
-import com.google.android.gms.maps.model.LatLng;
-
 /**
  * Created by federico on 5/15/17.
  */
 
 public class Runner {
 
-    private final String name;
-    private final LatLng location;
+    private String name;
+    private Location location;
 
-    public Runner(String name, LatLng location) {
-        this.name = name;
-        this.location = location;
-    }
+    public Runner() {}
 
     public String getName() {
         return name;
     }
-
-    public LatLng getLocation() {
+    public Location getLocation() {
         return location;
     }
 
-    @Override
-    public String toString() {
-        return "Runner{" +
-                "name='" + name + '\'' +
-                ", location=" + location +
-                '}';
+    public void setName(String name) {
+        this.name = name;
     }
+    public void setocation(Location location) {
+        this.location = location;
+    }
+
 }

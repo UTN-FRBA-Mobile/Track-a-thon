@@ -9,9 +9,11 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.trackathon.utn.track_a_thon.firebase.Firebase;
+import com.trackathon.utn.track_a_thon.model.Location;
 
 import java.util.HashMap;
 
@@ -54,16 +56,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mMap = googleMap;
         Firebase.raceUpdates(raceName, (runner) -> {
+            Location loc = runner.getLocation();
+            LatLng location = new LatLng(loc.getLongitud(), loc.getLatitude());
             if (runners.containsKey(runner.getName())) {
                 Marker marker = runners.get(runner.getName());
                 marker.showInfoWindow();
-                marker.setPosition(runner.getLocation());
+                marker.setPosition(location);
                 marker.setTitle(runner.getName());
             } else {
-                MarkerOptions markerOption = new MarkerOptions().position(runner.getLocation()).title(runner.getName());
+                MarkerOptions markerOption = new MarkerOptions().position(location).title(runner.getName());
                 Marker marker = mMap.addMarker(markerOption);
                 marker.showInfoWindow();
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(runner.getLocation()));
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
                 mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
                 runners.put(runner.getName(), marker);
             }

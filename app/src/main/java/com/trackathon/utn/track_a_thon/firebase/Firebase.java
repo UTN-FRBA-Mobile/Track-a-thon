@@ -8,6 +8,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.trackathon.utn.track_a_thon.model.Race;
 import com.trackathon.utn.track_a_thon.model.Runner;
@@ -67,19 +68,8 @@ public class Firebase {
 
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            HashMap<String, Object> racesUpdate = (HashMap<String, Object>) dataSnapshot.getValue();
-            ArrayList<Race> races = new ArrayList<>();
-            racesUpdate.forEach((name, values) -> {
-                HashMap<String, Object> attributes = (HashMap<String, Object>) values;
-                Race newRace = new Race();
-                newRace.setName(name);
-                HashMap<String, Long> runners = (HashMap<String, Long>) attributes.getOrDefault("runners", new HashMap<>());
-                HashMap<String, Long> watchers = (HashMap<String, Long>) attributes.getOrDefault("watchers", new HashMap<>());
-                newRace.setRunners((long) runners.values().size());
-                newRace.setWatchers((long) watchers.values().size());
-                races.add(newRace);
-            });
-
+            GenericTypeIndicator<List<Race>> type = new GenericTypeIndicator<List<Race>>() {};
+            List<Race> races = dataSnapshot.getValue(type);
             callback.accept(races);
         }
 
@@ -101,7 +91,7 @@ public class Firebase {
                 String name = dataSnapshot.getKey();
                 HashMap<String, Double> hash = (HashMap<String, Double>) dataSnapshot.getValue();
                 LatLng loc = new LatLng(hash.get("latitude"), hash.get("longitude"));
-                callback.accept(new Runner(name, loc));
+                callback.accept(new Runner());
             } catch (NullPointerException e) {
                 // FIXME
             }
