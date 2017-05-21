@@ -10,7 +10,6 @@ public class MainActivity extends AppCompatActivity {
 
     private Button btnWatchers;
     private Button btnTrackers;
-    private Button btnMaps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,13 +20,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createElements() {
-        btnMaps = (Button) findViewById(R.id.btnMaps);
         btnWatchers = (Button) findViewById(R.id.btnWatchers);
         btnTrackers = (Button) findViewById(R.id.btnTrackers);
     }
 
     private void createListeners() {
-        btnMaps.setOnClickListener((View v) -> openActivity(MapsActivity.class));
         btnTrackers.setOnClickListener((View v) -> openActivity(TrackingActivity.class));
         btnWatchers.setOnClickListener((View v) -> openActivity(WatchingActivity.class));
     }
