@@ -13,7 +13,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.trackathon.utn.track_a_thon.firebase.Firebase;
-import com.trackathon.utn.track_a_thon.model.Location;
 
 import java.util.HashMap;
 
@@ -52,13 +51,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         uiSettings.setCompassEnabled(true);
 
         Intent intent = this.getIntent();
-        String raceId = intent.getExtras().getString("RACE_NAME");
+        String raceId = intent.getExtras().getString("RACE_ID");
         String raceName = intent.getExtras().getString("RACE_NAME");
 
         mMap = googleMap;
-        Firebase.raceUpdates(raceName, (runner) -> {
-            Location loc = runner.getLocation();
-            LatLng location = new LatLng(loc.getLongitude(), loc.getLatitude());
+        Firebase.raceUpdates(raceId, (runnerId, runner) -> {
+            LatLng location = runner.getLocation().toLatLng();
             if (runners.containsKey(runner.getName())) {
                 Marker marker = runners.get(runner.getName());
                 marker.showInfoWindow();

@@ -1,8 +1,7 @@
 package com.trackathon.utn.track_a_thon.model;
 
-/**
- * Created by federico on 5/21/17.
- */
+import com.google.android.gms.maps.model.LatLng;
+
 public class Location {
     private Double latitude;
 
@@ -27,4 +26,7 @@ public class Location {
         this.longitude = longitude;
     }
 
+    public LatLng toLatLng() {
+        return new LatLng(getLatitude(), getLongitude());
+    }
 }

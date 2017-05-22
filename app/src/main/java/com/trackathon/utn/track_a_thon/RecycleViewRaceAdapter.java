@@ -13,9 +13,7 @@ import com.trackathon.utn.track_a_thon.model.Race;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 class RecycleViewRaceAdapter extends RecyclerView.Adapter<RecycleViewRaceAdapter.RaceViewHolder> {
 

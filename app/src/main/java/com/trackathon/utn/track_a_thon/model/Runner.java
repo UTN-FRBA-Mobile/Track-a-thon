@@ -1,9 +1,5 @@
 package com.trackathon.utn.track_a_thon.model;
 
-/**
- * Created by federico on 5/15/17.
- */
-
 public class Runner {
 
     private String name;
@@ -21,7 +17,7 @@ public class Runner {
     public void setName(String name) {
         this.name = name;
     }
-    public void setocation(Location location) {
+    public void setLocation(Location location) {
         this.location = location;
     }
 
