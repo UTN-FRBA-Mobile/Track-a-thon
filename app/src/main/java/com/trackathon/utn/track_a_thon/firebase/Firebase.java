@@ -13,63 +13,66 @@ import com.google.firebase.database.ValueEventListener;
 import com.trackathon.utn.track_a_thon.model.Race;
 import com.trackathon.utn.track_a_thon.model.Runner;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.Consumer;
 
 public class Firebase {
 
-    private static DatabaseReference races() {
-        return FirebaseDatabase.getInstance().getReference().child("races");
-    }
-
-    private static DatabaseReference trackers(String race, String runner) {
-        return trackers(race).child(runner);
-    }
-
-    private static DatabaseReference trackers(String race) {
-        return FirebaseDatabase.getInstance().getReference()
-                .child("trackers")
-                .child(race);
-    }
 
     public static void raceUpdates(String race, Consumer<Runner> callback) {
-        trackers(race).addChildEventListener(new RunnerEventListener(callback));
+        runnersRef(race).addChildEventListener(new RunnerEventListener(callback));
     }
 
-    public static void allRaces(Consumer<List<Race>> callback) {
-        races().addListenerForSingleValueEvent(new RaceEventListener(callback));
+    public static void allRaces(Consumer<HashMap<String, Race>> callback) {
+        racesRef().addListenerForSingleValueEvent(new RaceEventListener(callback));
     }
 
     public static void setNewLocation(String race, String runner, Location newLocation) {
-        DatabaseReference runnerRef = trackers(race, runner);
+        DatabaseReference runnerRef = runnerRef(race, runner);
         runnerRef.child("latitude").setValue(newLocation.getLatitude());
         runnerRef.child("longitude").setValue(newLocation.getLongitude());
     }
 
     public static void registerRunner(String race, String runner) {
-        races().child(race).child("runners").child(runner).setValue(1);
+        racesRef().child(race).child("runners").child(runner).setValue(1);
     }
 
     public static void unregisterRunner(String race, String runner) {
-        races().child(race).child("runners").child(runner).removeValue();
-        trackers(race, runner).removeValue();
+        racesRef().child(race).child("runners").child(runner).removeValue();
+        runnerRef(race, runner).removeValue();
+    }
+
+
+    private static DatabaseReference racesRef() {
+        return FirebaseDatabase.getInstance().getReference().child("races");
+    }
+
+    private static DatabaseReference raceRef(String raceId) {
+        return racesRef().child(raceId);
+    }
+
+    private static DatabaseReference runnersRef(String raceId) {
+        return raceRef(raceId).child("runners");
+    }
+
+    private static DatabaseReference runnerRef(String raceId, String runner) {
+        return runnersRef(raceId).child(runner);
     }
 
     private static class RaceEventListener implements ValueEventListener {
 
-        Consumer<List<Race>> callback;
+        Consumer<HashMap<String, Race>> callback;
 
-        private RaceEventListener(Consumer<List<Race>> callback) {
+        private RaceEventListener(Consumer<HashMap<String, Race>> callback) {
             this.callback = callback;
         }
 
 
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            GenericTypeIndicator<List<Race>> type = new GenericTypeIndicator<List<Race>>() {};
-            List<Race> races = dataSnapshot.getValue(type);
+            GenericTypeIndicator<HashMap<String, Race>> type = new GenericTypeIndicator<HashMap<String, Race>>() {};
+            HashMap<String, Race> races = dataSnapshot.getValue(type);
             callback.accept(races);
         }
 

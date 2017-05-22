@@ -52,12 +52,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         uiSettings.setCompassEnabled(true);
 
         Intent intent = this.getIntent();
-        String raceName = intent.getExtras().getString("RACE");
+        String raceId = intent.getExtras().getString("RACE_NAME");
+        String raceName = intent.getExtras().getString("RACE_NAME");
 
         mMap = googleMap;
         Firebase.raceUpdates(raceName, (runner) -> {
             Location loc = runner.getLocation();
-            LatLng location = new LatLng(loc.getLongitud(), loc.getLatitude());
+            LatLng location = new LatLng(loc.getLongitude(), loc.getLatitude());
             if (runners.containsKey(runner.getName())) {
                 Marker marker = runners.get(runner.getName());
                 marker.showInfoWindow();

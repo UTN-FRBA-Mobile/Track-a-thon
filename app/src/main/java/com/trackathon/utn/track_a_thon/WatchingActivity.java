@@ -29,9 +29,10 @@ public class WatchingActivity extends AppCompatActivity {
         racesWatchers.setLayoutManager(racesLayout);
 
         Firebase.allRaces(races -> {
-            RecycleViewRaceAdapter adapter = new RecycleViewRaceAdapter(races, (race) -> {
+            RecycleViewRaceAdapter adapter = new RecycleViewRaceAdapter(races, (raceId, race) -> {
                 Intent intent = new Intent(WatchingActivity.this, MapsActivity.class);
-                intent.putExtra("RACE", race.getName());
+                intent.putExtra("RACE_ID", raceId);
+                intent.putExtra("RACE_NAME", race.getName());
                 startActivity(intent);
             });
             racesWatchers.setAdapter(adapter);

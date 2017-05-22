@@ -10,18 +10,21 @@ import android.widget.TextView;
 
 import com.trackathon.utn.track_a_thon.model.Race;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-/**
- * Created by federico on 5/20/17.
- */
-public class RecycleViewRaceAdapter extends RecyclerView.Adapter<RecycleViewRaceAdapter.RaceViewHolder> {
+class RecycleViewRaceAdapter extends RecyclerView.Adapter<RecycleViewRaceAdapter.RaceViewHolder> {
 
-    private Consumer<Race> onClick;
-    private List<Race> races;
+    private BiConsumer<String, Race> onClick;
+    private HashMap<String, Race> races;
+    private List<String> keys;
 
-    public RecycleViewRaceAdapter(List<Race> races, Consumer<Race> onClick) {
+    RecycleViewRaceAdapter(HashMap<String, Race> races, BiConsumer<String, Race> onClick) {
+        this.keys = new ArrayList<>(races.keySet());
         this.races = races;
         this.onClick = onClick;
     }
@@ -34,14 +37,15 @@ public class RecycleViewRaceAdapter extends RecyclerView.Adapter<RecycleViewRace
 
     @Override
     public void onBindViewHolder(RaceViewHolder raceViewHolder, int position) {
-        Race race = races.get(position);
+        String raceId = this.keys.get(position);
+        Race race = this.races.get(raceId);
 
         raceViewHolder.raceName.setText(race.getName());
         raceViewHolder.raceRunnersCount.setText(String.valueOf(race.getRunners().size()));
         raceViewHolder.raceWatchersCount.setText(String.valueOf(race.getWatchers().size()));
         raceViewHolder.racePhoto.setImageResource(R.drawable.ic_race);
 
-        raceViewHolder.cv.setOnClickListener((view) -> this.onClick.accept(race));
+        raceViewHolder.cv.setOnClickListener((view) -> this.onClick.accept(raceId, race));
     }
 
     @Override
@@ -54,7 +58,7 @@ public class RecycleViewRaceAdapter extends RecyclerView.Adapter<RecycleViewRace
         return races.size();
     }
 
-    public class RaceViewHolder extends RecyclerView.ViewHolder {
+    class RaceViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
         TextView raceName;
         TextView raceWatchersCount;

@@ -6,7 +6,7 @@ package com.trackathon.utn.track_a_thon.model;
 public class Location {
     private Double latitude;
 
-    private Double longitud;
+    private Double longitude;
 
     public Location() {
     }
@@ -15,16 +15,16 @@ public class Location {
         return latitude;
     }
 
-    public Double getLongitud() {
-        return longitud;
+    public Double getLongitude() {
+        return longitude;
     }
 
     public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
-    public void setLongitud(Double longitud) {
-        this.longitud = longitud;
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 
 }
