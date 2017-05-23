@@ -1,21 +1,19 @@
 package com.trackathon.utn.track_a_thon;
 
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.trackathon.utn.track_a_thon.model.Race;
+import com.trackathon.utn.track_a_thon.model.RaceViewHolder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.BiConsumer;
 
-class RecycleViewRaceAdapter extends RecyclerView.Adapter<RecycleViewRaceAdapter.RaceViewHolder> {
+class RecycleViewRaceAdapter extends RecyclerView.Adapter<RaceViewHolder> {
 
     private BiConsumer<String, Race> onClick;
     private HashMap<String, Race> races;
@@ -38,12 +36,12 @@ class RecycleViewRaceAdapter extends RecyclerView.Adapter<RecycleViewRaceAdapter
         String raceId = this.keys.get(position);
         Race race = this.races.get(raceId);
 
-        raceViewHolder.raceName.setText(race.getName());
-        raceViewHolder.raceRunnersCount.setText(String.valueOf(race.getRunners().size()));
-        raceViewHolder.raceWatchersCount.setText(String.valueOf(race.getWatchers().size()));
-        raceViewHolder.racePhoto.setImageResource(R.drawable.ic_race);
+        raceViewHolder.getRaceName().setText(race.getName());
+        raceViewHolder.getRaceRunnersCount().setText(String.valueOf(race.getRunners().size()));
+        raceViewHolder.getRaceWatchersCount().setText(String.valueOf(race.getWatchers().size()));
+        raceViewHolder.getRacePhoto().setImageResource(R.drawable.ic_race);
 
-        raceViewHolder.cv.setOnClickListener((view) -> this.onClick.accept(raceId, race));
+        raceViewHolder.getCardView().setOnClickListener((view) -> this.onClick.accept(raceId, race));
     }
 
     @Override
@@ -54,23 +52,6 @@ class RecycleViewRaceAdapter extends RecyclerView.Adapter<RecycleViewRaceAdapter
     @Override
     public int getItemCount() {
         return races.size();
-    }
-
-    class RaceViewHolder extends RecyclerView.ViewHolder {
-        CardView cv;
-        TextView raceName;
-        TextView raceWatchersCount;
-        TextView raceRunnersCount;
-        ImageView racePhoto;
-
-        RaceViewHolder(View itemView) {
-            super(itemView);
-            cv = (CardView) itemView.findViewById(R.id.cv);
-            raceName = (TextView) itemView.findViewById(R.id.race_name);
-            raceWatchersCount = (TextView) itemView.findViewById(R.id.race_watchers);
-            raceRunnersCount = (TextView) itemView.findViewById(R.id.race_runners);
-            racePhoto = (ImageView) itemView.findViewById(R.id.race_photo);
-        }
     }
 
 }
