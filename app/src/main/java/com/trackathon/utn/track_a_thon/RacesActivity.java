@@ -1,5 +1,6 @@
 package com.trackathon.utn.track_a_thon;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -32,6 +33,10 @@ public class RacesActivity extends AppCompatActivity {
         racesWatchers.setHasFixedSize(true);
         racesWatchers.setLayoutManager(racesLayout);
 
+        ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setMessage(getString(R.string.fetching_races));
+        dialog.show();
+
         Firebase.allRaces(races -> {
             RecycleViewRaceAdapter adapter = new RecycleViewRaceAdapter(races, (raceId, race) -> {
                 Intent intent = new Intent(RacesActivity.this, nextActivity);
@@ -40,6 +45,7 @@ public class RacesActivity extends AppCompatActivity {
                 startActivity(intent);
             });
             racesWatchers.setAdapter(adapter);
+            dialog.hide();
         });
     }
 

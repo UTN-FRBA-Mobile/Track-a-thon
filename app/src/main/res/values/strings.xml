@@ -10,4 +10,5 @@
     <string name="password">Password</string>
     <string name="action_sign_in_short">Iniciar Sesión</string>
     <string name="action_sign_in">Login</string>
+    <string name="fetching_races">Fetching available races</string>
 </resources>
