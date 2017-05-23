@@ -18,9 +18,11 @@ public class RacesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_watching);
+        setContentView(R.layout.activity_races);
         setComponentsBinding();
-        nextActivity = getIntent().getExtras().getBoolean(TrackatonConstant.IS_TRACKER) ? TrackingActivity.class : MapsActivity.class;
+        nextActivity = getIntent().getExtras().getBoolean(TrackatonConstant.IS_TRACKER)
+                ? TrackingActivity.class
+                : MapsActivity.class;
     }
 
     private void setComponentsBinding() {

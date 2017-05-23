@@ -40,7 +40,7 @@
 
         <activity
             android:name=".RacesActivity"
-            android:label="@string/title_activity_watching" />
+            android:label="@string/title_activity_races" />
 
         <activity
             android:name=".TrackingActivity"
@@ -48,7 +48,7 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps" />
+            android:label="@string/title_activity_map" />
 
         <service
             android:name=".LocationReporterService"
