@@ -9,6 +9,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -70,7 +71,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void createRunnerMarker(Runner runner) {
         LatLng location = runner.getLocation().toLatLng();
-        MarkerOptions markerOption = new MarkerOptions().position(location).title(runner.getName());
+        MarkerOptions markerOption = new MarkerOptions().position(location).title(runner.getName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.logo_runner));
         Marker marker = mMap.addMarker(markerOption);
         marker.showInfoWindow();
         mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
