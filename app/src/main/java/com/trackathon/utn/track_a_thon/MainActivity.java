@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void openActivity (Boolean isTracker) {
         Intent intent = new Intent(MainActivity.this, RacesActivity.class);
-        intent.putExtra("IS_TRACKER", isTracker);
+        intent.putExtra(TrackatonConstant.IS_TRACKER, isTracker);
         startActivity(intent);
     }
 }

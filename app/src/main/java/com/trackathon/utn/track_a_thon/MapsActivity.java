@@ -51,8 +51,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         uiSettings.setCompassEnabled(true);
 
         Intent intent = this.getIntent();
-        String raceId = intent.getExtras().getString("RACE_ID");
-        String raceName = intent.getExtras().getString("RACE_NAME");
+        String raceId = intent.getExtras().getString(TrackatonConstant.RACE_ID);
+        String raceName = intent.getExtras().getString(TrackatonConstant.RACE_NAME);
 
         mMap = googleMap;
         Firebase.raceUpdates(raceId, (runnerId, runner) -> {

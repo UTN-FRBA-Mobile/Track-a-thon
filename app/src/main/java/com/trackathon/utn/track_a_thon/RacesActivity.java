@@ -20,7 +20,7 @@ public class RacesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watching);
         setComponentsBinding();
-        nextActivity = getIntent().getExtras().getBoolean("IS_TRACKER") ? TrackingActivity.class : MapsActivity.class;
+        nextActivity = getIntent().getExtras().getBoolean(TrackatonConstant.IS_TRACKER) ? TrackingActivity.class : MapsActivity.class;
     }
 
     private void setComponentsBinding() {
@@ -33,8 +33,8 @@ public class RacesActivity extends AppCompatActivity {
         Firebase.allRaces(races -> {
             RecycleViewRaceAdapter adapter = new RecycleViewRaceAdapter(races, (raceId, race) -> {
                 Intent intent = new Intent(RacesActivity.this, nextActivity);
-                intent.putExtra("RACE_ID", raceId);
-                intent.putExtra("RACE_NAME", race.getName());
+                intent.putExtra(TrackatonConstant.RACE_ID, raceId);
+                intent.putExtra(TrackatonConstant.RACE_NAME, race.getName());
                 startActivity(intent);
             });
             racesWatchers.setAdapter(adapter);
