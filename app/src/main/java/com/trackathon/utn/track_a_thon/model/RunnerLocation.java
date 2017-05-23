@@ -2,12 +2,12 @@ package com.trackathon.utn.track_a_thon.model;
 
 import com.google.android.gms.maps.model.LatLng;
 
-public class Location {
+public class RunnerLocation {
     private Double latitude;
 
     private Double longitude;
 
-    public Location() {
+    public RunnerLocation() {
     }
 
     public Double getLatitude() {
