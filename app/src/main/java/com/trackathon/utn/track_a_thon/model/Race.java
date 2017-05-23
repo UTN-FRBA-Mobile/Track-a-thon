@@ -1,45 +1,34 @@
 package com.trackathon.utn.track_a_thon.model;
 
+import java.util.HashMap;
+import java.util.List;
+
 public class Race {
 
     private String name;
-    private Long watchers;
-    private Long runners;
+    private List<String> watchers;
+    private HashMap<String, Runner> runners;
+
+    public Race() {}
 
     public String getName() {
         return name;
     }
-
-    public Long getWatchers() {
+    public List<String> getWatchers() {
         return watchers;
     }
-
-    public Long getRunners() {
+    public HashMap<String, Runner>  getRunners() {
         return runners;
-    }
-
-    public Race() {
     }
 
     public void setName(String name) {
         this.name = name;
     }
-
-    public void setWatchers(Long watchers) {
+    public void setWatchers(List<String> watchers) {
         this.watchers = watchers;
     }
-
-    public void setRunners(Long runners) {
+    public void setRunners(HashMap<String, Runner>  runners) {
         this.runners = runners;
-    }
-
-    @Override
-    public String toString() {
-        return "Race{" +
-                "name='" + name + '\'' +
-                ", watchers=" + watchers +
-                ", runners=" + runners +
-                '}';
     }
 
 }

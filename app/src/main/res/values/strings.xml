@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Track-a-thon</string>
-    <string name="title_activity_maps">Map</string>
-    <string name="title_activity_watching">WatchingActivity</string>
-    <string name="title_activity_tracking">TrackingActivity</string>
+    <string name="title_activity_map">Race - %1$s</string>
+    <string name="title_activity_races">Races</string>
+    <string name="title_activity_tracking">Tracker</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
@@ -10,4 +10,7 @@
     <string name="password">Password</string>
     <string name="action_sign_in_short">Iniciar Sesión</string>
     <string name="action_sign_in">Login</string>
+    <string name="fetching_races">Fetching available races</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
 </resources>

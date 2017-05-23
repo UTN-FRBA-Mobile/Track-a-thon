@@ -10,7 +10,6 @@ public class MainActivity extends AppCompatActivity {
 
     private Button btnWatchers;
     private Button btnTrackers;
-    private Button btnMaps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,18 +20,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createElements() {
-        btnMaps = (Button) findViewById(R.id.btnMaps);
         btnWatchers = (Button) findViewById(R.id.btnWatchers);
         btnTrackers = (Button) findViewById(R.id.btnTrackers);
     }
 
     private void createListeners() {
-        btnMaps.setOnClickListener((View v) -> openActivity(MapsActivity.class));
-        btnTrackers.setOnClickListener((View v) -> openActivity(TrackingActivity.class));
-        btnWatchers.setOnClickListener((View v) -> openActivity(WatchingActivity.class));
+        btnTrackers.setOnClickListener((View v) -> openActivity(true));
+        btnWatchers.setOnClickListener((View v) -> openActivity(false));
     }
 
-    private void openActivity (Class clazz) {
-        startActivity(new Intent(MainActivity.this, clazz));
+    private void openActivity (Boolean isTracker) {
+        Intent intent = new Intent(MainActivity.this, RacesActivity.class);
+        intent.putExtra(TrackatonConstant.IS_TRACKER, isTracker);
+        startActivity(intent);
     }
 }

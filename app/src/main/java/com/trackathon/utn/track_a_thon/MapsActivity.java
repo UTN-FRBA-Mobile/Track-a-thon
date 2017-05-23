@@ -1,5 +1,6 @@
 package com.trackathon.utn.track_a_thon;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
@@ -8,14 +9,18 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.trackathon.utn.track_a_thon.firebase.Firebase;
+import com.trackathon.utn.track_a_thon.model.Runner;
 
 import java.util.HashMap;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    private String raceId;
     private GoogleMap mMap;
     private HashMap<String, Marker> runners;
 
@@ -24,10 +29,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        Intent intent = this.getIntent();
+
+        String raceName = intent.getExtras().getString(TrackatonConstant.RACE_NAME);
+        raceId = intent.getExtras().getString(TrackatonConstant.RACE_ID);
         runners = new HashMap<>();
+
+        setTitle(getString(R.string.title_activity_map, raceName));
     }
 
 
@@ -49,22 +60,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         uiSettings.setCompassEnabled(true);
 
         mMap = googleMap;
-        Firebase.raceUpdates("Nike 10k", (runner) -> {
+        Firebase.raceUpdates(raceId, (runnerId, runner) -> {
             if (runners.containsKey(runner.getName())) {
-                Marker marker = runners.get(runner.getName());
-                marker.showInfoWindow();
-                marker.setPosition(runner.getLocation());
-                marker.setTitle(runner.getName());
+                updateRunnerMarker(runner);
             } else {
-                MarkerOptions markerOption = new MarkerOptions().position(runner.getLocation()).title(runner.getName());
-                Marker marker = mMap.addMarker(markerOption);
-                marker.showInfoWindow();
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(runner.getLocation()));
-                mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-                runners.put(runner.getName(), marker);
+                createRunnerMarker(runner);
             }
         });
+    }
 
+    private void createRunnerMarker(Runner runner) {
+        LatLng location = runner.getLocation().toLatLng();
+        MarkerOptions markerOption = new MarkerOptions().position(location).title(runner.getName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.logo_runner));
+        Marker marker = mMap.addMarker(markerOption);
+        marker.showInfoWindow();
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+        runners.put(runner.getName(), marker);
+    }
 
+    private void updateRunnerMarker(Runner runner) {
+        LatLng location = runner.getLocation().toLatLng();
+        Marker marker = runners.get(runner.getName());
+        marker.showInfoWindow();
+        marker.setPosition(location);
+        marker.setTitle(runner.getName());
     }
 }
