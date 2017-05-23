@@ -18,6 +18,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.trackathon.utn.track_a_thon.firebase.Firebase;
+import com.trackathon.utn.track_a_thon.model.RunnerLocation;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -133,7 +134,7 @@ public class LocationReporterService extends Service {
         locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
                 Log.d("LocationReporterService", location.toString());
-                Firebase.setNewLocation(raceId, runnerId, location);
+                Firebase.setNewLocation(raceId, runnerId, RunnerLocation.from(location));
                 if (lastLocation == null) {
                     lastLocation = location;
                 } else {

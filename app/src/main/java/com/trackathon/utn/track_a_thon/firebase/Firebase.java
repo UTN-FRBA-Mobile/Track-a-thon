@@ -1,11 +1,10 @@
 package com.trackathon.utn.track_a_thon.firebase;
 
-import android.location.Location;
-
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.trackathon.utn.track_a_thon.model.Race;
 import com.trackathon.utn.track_a_thon.model.Runner;
+import com.trackathon.utn.track_a_thon.model.RunnerLocation;
 
 import java.util.HashMap;
 import java.util.function.BiConsumer;
@@ -18,10 +17,9 @@ public class Firebase {
         racesRef().addListenerForSingleValueEvent(new RaceEventListener(callback));
     }
 
-    public static void setNewLocation(String raceId, String runnerId, Location newLocation) {
+    public static void setNewLocation(String raceId, String runnerId, RunnerLocation newLocation) {
         DatabaseReference runnerRef = runnerRef(raceId, runnerId);
-        runnerRef.child("latitude").setValue(newLocation.getLatitude());
-        runnerRef.child("longitude").setValue(newLocation.getLongitude());
+        runnerRef.child("location").setValue(newLocation);
     }
 
     public static String registerRunner(String raceId, String runnerName) {

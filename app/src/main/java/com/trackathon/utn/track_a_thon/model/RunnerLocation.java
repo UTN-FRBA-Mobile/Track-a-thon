@@ -1,5 +1,7 @@
 package com.trackathon.utn.track_a_thon.model;
 
+import android.location.Location;
+
 import com.google.android.gms.maps.model.LatLng;
 
 public class RunnerLocation {
@@ -28,5 +30,12 @@ public class RunnerLocation {
 
     public LatLng toLatLng() {
         return new LatLng(getLatitude(), getLongitude());
+    }
+
+    public static RunnerLocation from(Location location) {
+        RunnerLocation runnerLocation = new RunnerLocation();
+        runnerLocation.setLatitude(location.getLatitude());
+        runnerLocation.setLongitude(location.getLongitude());
+        return runnerLocation;
     }
 }
