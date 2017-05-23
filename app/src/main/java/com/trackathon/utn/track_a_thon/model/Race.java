@@ -2,9 +2,21 @@ package com.trackathon.utn.track_a_thon.model;
 
 public class Race {
 
-    String name;
-    Long watchers;
-    Long runners;
+    private String name;
+    private Long watchers;
+    private Long runners;
+
+    public String getName() {
+        return name;
+    }
+
+    public Long getWatchers() {
+        return watchers;
+    }
+
+    public Long getRunners() {
+        return runners;
+    }
 
     public Race() {
     }
@@ -29,4 +41,5 @@ public class Race {
                 ", runners=" + runners +
                 '}';
     }
+
 }
