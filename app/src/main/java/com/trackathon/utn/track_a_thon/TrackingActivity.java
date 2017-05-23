@@ -30,7 +30,7 @@ public class TrackingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tracking);
         trackButton = (Button) findViewById(R.id.trackButton);
-        trackButton.setText("Start");
+        trackButton.setText(R.string.start);
         Intent intent = this.getIntent();
 
         raceName = intent.getExtras().getString(TrackatonConstant.RACE_NAME);
@@ -70,11 +70,11 @@ public class TrackingActivity extends AppCompatActivity {
     private void startTracking() {
         if (started) {
             trackingService.stop();
-            trackButton.setText("Start");
+            trackButton.setText(R.string.start);
             started = false;
         } else {
-            trackingService.start("Nike 10k", "Usain Bolt");
-            trackButton.setText("Stop");
+            trackingService.start(raceId, raceName, "Usain Bolt");
+            trackButton.setText(R.string.stop);
             started = true;
         }
     }

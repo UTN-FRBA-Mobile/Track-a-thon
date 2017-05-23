@@ -18,14 +18,16 @@ public class Firebase {
         racesRef().addListenerForSingleValueEvent(new RaceEventListener(callback));
     }
 
-    public static void setNewLocation(String race, String runner, Location newLocation) {
-        DatabaseReference runnerRef = runnerRef(race, runner);
+    public static void setNewLocation(String raceId, String runnerId, Location newLocation) {
+        DatabaseReference runnerRef = runnerRef(raceId, runnerId);
         runnerRef.child("latitude").setValue(newLocation.getLatitude());
         runnerRef.child("longitude").setValue(newLocation.getLongitude());
     }
 
-    public static void registerRunner(String race, String runner) {
-        racesRef().child(race).child("runners").child(runner).push();
+    public static String registerRunner(String raceId, String runnerName) {
+        String runnerId = runnersRef(raceId).push().getKey();
+        runnerRef(raceId, runnerId).child("name").setValue(runnerName);
+        return runnerId;
     }
 
     public static void unregisterRunner(String race, String runner) {

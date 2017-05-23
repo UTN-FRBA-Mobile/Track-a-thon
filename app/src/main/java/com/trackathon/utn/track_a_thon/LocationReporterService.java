@@ -28,25 +28,28 @@ public class LocationReporterService extends Service {
     private final IBinder serviceBinder = new ServiceBinder();
 
     class ServiceBinder extends Binder {
+
         LocationReporterService getService() {
             return LocationReporterService.this;
         }
     }
-
     final private Integer PERSISTENT_NOTIFICATION_ID = 0;
 
     private Handler handler;
+
     private Runnable updateRunnable;
     private Integer updateInterval;
-
     private LocationManager locationManager;
+
     private LocationListener locationListener;
     private NotificationManager notificationManager;
     private NotificationCompat.Builder notificationBuilder;
     private NotificationCompat.BigTextStyle notificationStyle;
 
-    private String runner;
-    private String race;
+    private String raceId;
+    private String raceName;
+    private String runnerId;
+    private String runnerName;
     private DecimalFormat speedFormat;
     private Location lastLocation;
     private Float accumulatedDistance;
@@ -91,9 +94,10 @@ public class LocationReporterService extends Service {
         return baseNotificationMessage() + "\nSpeed: " + speedFormat.format(speed);
     }
 
-    public void start(String race, String runner) {
-        this.runner = runner;
-        this.race = race;
+    public void start(String raceId, String raceName, String runnerName) {
+        this.raceId = raceId;
+        this.raceName = raceName;
+        this.runnerName = runnerName;
         setUpStats();
         addRaceRunner();
         toastNotification("Service started");
@@ -103,7 +107,7 @@ public class LocationReporterService extends Service {
     }
 
     private void addRaceRunner() {
-        Firebase.registerRunner(race, runner);
+        this.runnerId = Firebase.registerRunner(raceId, runnerName);
     }
 
     private void setUpStats() {
@@ -129,7 +133,7 @@ public class LocationReporterService extends Service {
         locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
                 Log.d("LocationReporterService", location.toString());
-                Firebase.setNewLocation(race, runner, location);
+                Firebase.setNewLocation(raceId, runnerId, location);
                 if (lastLocation == null) {
                     lastLocation = location;
                 } else {
@@ -174,7 +178,7 @@ public class LocationReporterService extends Service {
     }
 
     private void removeRunnerFromRace() {
-        Firebase.unregisterRunner(race, runner);
+        Firebase.unregisterRunner(raceId, runnerId);
     }
 
     private void stopScheduledUpdates() {
