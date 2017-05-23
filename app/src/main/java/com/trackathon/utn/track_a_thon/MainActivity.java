@@ -25,11 +25,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createListeners() {
-        btnTrackers.setOnClickListener((View v) -> openActivity(TrackingActivity.class));
-        btnWatchers.setOnClickListener((View v) -> openActivity(WatchingActivity.class));
+        btnTrackers.setOnClickListener((View v) -> openActivity(true));
+        btnWatchers.setOnClickListener((View v) -> openActivity(false));
     }
 
-    private void openActivity (Class clazz) {
-        startActivity(new Intent(MainActivity.this, clazz));
+    private void openActivity (Boolean isTracker) {
+        Intent intent = new Intent(MainActivity.this, RacesActivity.class);
+        intent.putExtra("IS_TRACKER", isTracker);
+        startActivity(intent);
     }
 }

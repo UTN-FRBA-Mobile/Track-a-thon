@@ -25,7 +25,7 @@ public class Firebase {
     }
 
     public static void registerRunner(String race, String runner) {
-        racesRef().child(race).child("runners").child(runner).setValue(1);
+        racesRef().child(race).child("runners").child(runner).push();
     }
 
     public static void unregisterRunner(String race, String runner) {

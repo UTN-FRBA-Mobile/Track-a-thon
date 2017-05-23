@@ -2,6 +2,7 @@ package com.trackathon.utn.track_a_thon;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,15 +10,17 @@ import android.support.v7.widget.RecyclerView;
 import com.trackathon.utn.track_a_thon.firebase.Firebase;
 
 
-public class WatchingActivity extends AppCompatActivity {
+public class RacesActivity extends AppCompatActivity {
 
     RecyclerView racesWatchers;
+    Class<? extends FragmentActivity> nextActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watching);
         setComponentsBinding();
+        nextActivity = getIntent().getExtras().getBoolean("IS_TRACKER") ? TrackingActivity.class : MapsActivity.class;
     }
 
     private void setComponentsBinding() {
@@ -29,7 +32,7 @@ public class WatchingActivity extends AppCompatActivity {
 
         Firebase.allRaces(races -> {
             RecycleViewRaceAdapter adapter = new RecycleViewRaceAdapter(races, (raceId, race) -> {
-                Intent intent = new Intent(WatchingActivity.this, MapsActivity.class);
+                Intent intent = new Intent(RacesActivity.this, nextActivity);
                 intent.putExtra("RACE_ID", raceId);
                 intent.putExtra("RACE_NAME", race.getName());
                 startActivity(intent);
