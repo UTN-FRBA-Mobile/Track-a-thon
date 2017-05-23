@@ -21,6 +21,8 @@ public class TrackingActivity extends AppCompatActivity {
     Button trackButton;
     Boolean started = false;
     LocationReporterService trackingService;
+    private String raceName;
+    private String raceId;
 
 
     @Override
@@ -29,6 +31,11 @@ public class TrackingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tracking);
         trackButton = (Button) findViewById(R.id.trackButton);
         trackButton.setText("Start");
+        Intent intent = this.getIntent();
+
+        raceName = intent.getExtras().getString(TrackatonConstant.RACE_NAME);
+        raceId = intent.getExtras().getString(TrackatonConstant.RACE_ID);
+
         if (hasLocationPermission()) {
             bindTrackingService();
         } else {
