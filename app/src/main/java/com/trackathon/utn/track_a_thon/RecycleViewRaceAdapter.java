@@ -37,6 +37,9 @@ class RecycleViewRaceAdapter extends RecyclerView.Adapter<RaceViewHolder> {
         Race race = this.races.get(raceId);
 
         raceViewHolder.getRaceName().setText(race.getName());
+        raceViewHolder.getRaceLocation().setText(race.getLocation());
+        raceViewHolder.getRaceStartTime().setText(race.getStartTime());
+        raceViewHolder.getRaceDistance().setText(race.getDistance());
         raceViewHolder.getRaceRunnersCount().setText(String.valueOf(race.getRunners().size()));
         raceViewHolder.getRaceWatchersCount().setText(String.valueOf(race.getWatchers().size()));
         raceViewHolder.getRacePhoto().setImageResource(R.drawable.ic_race);

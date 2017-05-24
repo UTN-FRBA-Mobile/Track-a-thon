@@ -6,6 +6,9 @@ import java.util.List;
 public class Race {
 
     private String name;
+    private String location;
+    private String startTime;
+    private String distance;
     private List<String> watchers;
     private HashMap<String, Runner> runners;
 
@@ -14,6 +17,19 @@ public class Race {
     public String getName() {
         return name;
     }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public String getDistance() {
+        return distance;
+    }
+
     public List<String> getWatchers() {
         return watchers;
     }
@@ -24,6 +40,9 @@ public class Race {
     public void setName(String name) {
         this.name = name;
     }
+    public void setLocation(String location) { this.location = location; }
+    public void setStartTime(String startTime) { this.startTime = startTime; }
+    public void setDistance(String distance) { this.distance = distance; }
     public void setWatchers(List<String> watchers) {
         this.watchers = watchers;
     }
