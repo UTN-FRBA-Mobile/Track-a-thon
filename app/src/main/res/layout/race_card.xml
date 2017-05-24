@@ -36,6 +36,7 @@
                 android:layout_gravity="center_vertical"
                 android:orientation="vertical"
                 android:layout_marginLeft="10dp"
+                android:layout_weight="1"
                 >
 
                 <TextView
@@ -43,7 +44,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start|top"
-                    android:textSize="24sp" />
+                    android:textSize="24sp"
+                    android:lines="1"
+                    android:scrollHorizontally="true"
+                    android:ellipsize="end"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -110,7 +114,6 @@
                 android:orientation="vertical"
                 android:textAlignment="textEnd"
                 android:layout_gravity="end"
-                android:layout_weight="1"
                 android:layout_marginRight="5dp">
 
                 <LinearLayout
