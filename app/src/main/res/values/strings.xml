@@ -22,4 +22,6 @@
     <string name="watchers">Watchers</string>
     <string name="trackers">Trackers</string>
     <string name="app_logo">App logo</string>
+    <string name="session">Session</string>
+    <string name="sign_out">Sign out</string>
 </resources>
