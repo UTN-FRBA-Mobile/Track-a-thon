@@ -10,8 +10,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.trackathon.utn.track_a_thon.model.User;
 
 public class HomeActivity extends AppCompatActivity
@@ -38,6 +40,8 @@ public class HomeActivity extends AppCompatActivity
         View headerView = navigationView.getHeaderView(0);
         ((TextView)headerView.findViewById(R.id.navigation_drawer_name)).setText(user.getName());
         ((TextView)headerView.findViewById(R.id.navigation_drawer_email)).setText(user.getEmail());
+        ImageView imageView = (ImageView) headerView.findViewById(R.id.navigation_drawer_avatar);
+        Picasso.with(headerView.getContext()).load(user.getImageUrl()).into(imageView);
 
     }
 
