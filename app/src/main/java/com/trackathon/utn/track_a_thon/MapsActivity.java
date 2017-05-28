@@ -1,7 +1,11 @@
 package com.trackathon.utn.track_a_thon;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -9,6 +13,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -42,7 +47,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -71,12 +75,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void createRunnerMarker(Runner runner) {
         LatLng location = runner.getLocation().toLatLng();
-        MarkerOptions markerOption = new MarkerOptions().position(location).title(runner.getName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.logo_runner));
+        MarkerOptions markerOption = new MarkerOptions().position(location).title(runner.getName()).icon(getBitmapDescriptor());
         Marker marker = mMap.addMarker(markerOption);
         marker.showInfoWindow();
         mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
         runners.put(runner.getName(), marker);
+    }
+
+    @NonNull
+    private BitmapDescriptor getBitmapDescriptor() {
+        Drawable drawable = getResources().getDrawable(R.drawable.ic_runner, getTheme());
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
     private void updateRunnerMarker(Runner runner) {
