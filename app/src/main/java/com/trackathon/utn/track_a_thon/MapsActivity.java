@@ -75,6 +75,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void createNavigation() {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        setNavigationMenu(navigationView);
 
         User user = User.getCurrentUser();
         View headerView = navigationView.getHeaderView(0);
@@ -82,6 +83,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         ((TextView)headerView.findViewById(R.id.navigation_drawer_email)).setText(user.getEmail());
         ImageView imageView = (ImageView) headerView.findViewById(R.id.navigation_drawer_avatar);
         Picasso.with(headerView.getContext()).load(user.getImageUrl()).into(imageView);
+    }
+
+    private void setNavigationMenu(NavigationView navigationView) {
+        Menu menu = navigationView.getMenu();
+        menu.clear();
+
     }
 
     @Override
@@ -109,31 +116,31 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_watchers) {
-
+            doSomething();
         } else if (id == R.id.nav_trackers) {
-
+            doSomething();
         } else if (id == R.id.nav_logout) {
-
+            doSomething();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    private void doSomething() {
+
+    }
+
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
