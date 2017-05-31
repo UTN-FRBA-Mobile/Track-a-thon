@@ -91,15 +91,20 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void setNavigationMenu() {
         LinearLayoutManager racesLayout = new LinearLayoutManager(getApplicationContext());
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         runnersRV = (RecyclerView)findViewById(R.id.runners);
         runnersRV.setHasFixedSize(true);
         runnersRV.setLayoutManager(racesLayout);
 
         Firebase.allRunners(raceId, trackers -> {
-            RecycleViewRunnerAdapter adapter = new RecycleViewRunnerAdapter(trackers, (runnerId, runner) ->
-                Toast.makeText(this, runner.getName(), Toast.LENGTH_LONG).show()
-            );
+            RecycleViewRunnerAdapter adapter = new RecycleViewRunnerAdapter(trackers, (runnerId, runner) -> {
+                Marker marker = runners.get(runner.getName());
+                marker.showInfoWindow();
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
+                mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+                drawer.closeDrawer(GravityCompat.START);
+            });
             runnersRV.setAdapter(adapter);
         });
     }
