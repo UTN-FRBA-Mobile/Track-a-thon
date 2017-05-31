@@ -11,12 +11,15 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -40,6 +43,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private String raceId;
     private GoogleMap mMap;
     private HashMap<String, Marker> runners;
+    private RecyclerView runnersRV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +79,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void createNavigation() {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        setNavigationMenu(navigationView);
+        setNavigationMenu();
 
         User user = User.getCurrentUser();
         View headerView = navigationView.getHeaderView(0);
@@ -85,10 +89,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Picasso.with(headerView.getContext()).load(user.getImageUrl()).into(imageView);
     }
 
-    private void setNavigationMenu(NavigationView navigationView) {
-        Menu menu = navigationView.getMenu();
-        menu.clear();
+    private void setNavigationMenu() {
+        LinearLayoutManager racesLayout = new LinearLayoutManager(getApplicationContext());
 
+        runnersRV = (RecyclerView)findViewById(R.id.runners);
+        runnersRV.setHasFixedSize(true);
+        runnersRV.setLayoutManager(racesLayout);
+
+        Firebase.allRunners(raceId, trackers -> {
+            RecycleViewRunnerAdapter adapter = new RecycleViewRunnerAdapter(trackers, (runnerId, runner) ->
+                Toast.makeText(this, runner.getName(), Toast.LENGTH_LONG).show()
+            );
+            runnersRV.setAdapter(adapter);
+        });
     }
 
     @Override
@@ -106,17 +119,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home, menu);
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
