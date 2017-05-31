@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.trackathon.utn.track_a_thon.model.Race;
+import com.squareup.picasso.Picasso;
 import com.trackathon.utn.track_a_thon.model.Runner;
 import com.trackathon.utn.track_a_thon.model.RunnerViewHolder;
 
@@ -39,6 +39,8 @@ class RecycleViewRunnerAdapter extends RecyclerView.Adapter<RunnerViewHolder> {
 
         runnerViewHolder.getRunnerName().setText(runner.getName());
         runnerViewHolder.getRunnerPhoto().setImageResource(R.drawable.ic_race);
+        Picasso.with(runnerViewHolder.getCardView().getContext()).load(runner.getImageUrl()).into(runnerViewHolder.getRunnerPhoto());
+
 
         runnerViewHolder.getCardView().setOnClickListener((view) -> this.onClick.accept(runnerId, runner));
     }

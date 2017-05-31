@@ -61,27 +61,4 @@ public class Firebase {
     private static DatabaseReference runnerRef(String raceId, String runner) {
         return runnersRef(raceId).child(runner);
     }
-
-
-
-
-    private static class RunnerValueEventListener implements ValueEventListener {
-        private Consumer<HashMap<String, Runner>> callback;
-
-        RunnerValueEventListener(Consumer<HashMap<String, Runner>> callback) {
-            this.callback = callback;
-        }
-
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
-            GenericTypeIndicator<HashMap<String, Runner>> type = new GenericTypeIndicator<HashMap<String, Runner>>() {};
-            HashMap<String, Runner> runners = dataSnapshot.getValue(type);
-            callback.accept(runners);
-        }
-
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
-
-        }
-    }
 }
