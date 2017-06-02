@@ -48,7 +48,6 @@ public class LocationReporterService extends Service {
     private NotificationCompat.BigTextStyle notificationStyle;
 
     private String raceId;
-    private String raceName;
     private String runnerId;
     private String runnerName;
     private DecimalFormat speedFormat;
@@ -97,7 +96,6 @@ public class LocationReporterService extends Service {
 
     public void start(String raceId, String raceName, String runnerName) {
         this.raceId = raceId;
-        this.raceName = raceName;
         this.runnerName = runnerName;
         setUpStats();
         addRaceRunner();
