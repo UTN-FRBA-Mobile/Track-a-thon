@@ -24,4 +24,6 @@
     <string name="app_logo">App logo</string>
     <string name="session">Session</string>
     <string name="sign_out">Sign out</string>
+    <string name="action_search">Search Races</string>
+    <string name="search_races_hint">Search Races...</string>
 </resources>
