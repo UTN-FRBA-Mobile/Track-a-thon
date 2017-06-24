@@ -5,9 +5,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.trackathon.utn.track_a_thon.model.Runner;
 
-import java.util.HashMap;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 class RunnerEventListener implements ChildEventListener {
     private BiConsumer<String, Runner> callback;

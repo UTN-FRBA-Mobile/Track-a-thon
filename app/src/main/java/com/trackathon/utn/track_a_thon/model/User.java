@@ -1,6 +1,8 @@
 package com.trackathon.utn.track_a_thon.model;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
 
     static final long serialVersionUID = 0L;
 
@@ -13,6 +15,9 @@ public class User {
 
     public static User getCurrentUser() {
         return CurrentUser != null ? CurrentUser : USAIN_BOLT;
+    }
+    public static void setCurrentUser(User user) {
+        CurrentUser = user;
     }
 
     private String name;
