@@ -110,8 +110,6 @@ public class RaceActivity extends AppCompatActivity {
 
     public static class MapViewFragment extends Fragment {
 
-        private static final String RACE_ID = TrackatonConstant.RACE_ID;
-
         private GoogleMap mMap;
         private String raceId;
         private HashMap<String, Marker> runners;
@@ -122,7 +120,7 @@ public class RaceActivity extends AppCompatActivity {
         public static MapViewFragment newInstance(String raceId, HashMap<String, Marker> runners) {
             MapViewFragment fragment = new MapViewFragment();
             Bundle args = new Bundle();
-            args.putString(RACE_ID, raceId);
+            args.putString(TrackatonConstant.RACE_ID, raceId);
             args.putSerializable(TrackatonConstant.RUNNERS, runners);
             fragment.setArguments(args);
             return fragment;
