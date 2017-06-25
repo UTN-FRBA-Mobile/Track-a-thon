@@ -35,7 +35,10 @@ import java.util.HashMap;
 
 public class RaceActivity extends AppCompatActivity {
 
+    private GoogleMap mMap;
     private HashMap<String, Marker> runners = new HashMap<>();
+
+    private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +52,9 @@ public class RaceActivity extends AppCompatActivity {
         String raceId = intent.getStringExtra(TrackatonConstant.RACE_ID);
         String raceName = intent.getStringExtra(TrackatonConstant.RACE_NAME);
 
-        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), raceId, runners);
+        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), raceId);
 
-        ViewPager mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -61,21 +64,69 @@ public class RaceActivity extends AppCompatActivity {
 
     }
 
+    public void findInMap(String runnerId, Runner runner) {
+        Marker marker = runners.get(runner.getName());
+        if (marker != null) {
+            marker.showInfoWindow();
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+        }
+        mViewPager.setCurrentItem(0, true);
+    }
+
+    public void setGoogleMap(GoogleMap googleMap) {
+        this.mMap = googleMap;
+    }
+
+    private void update(String runnerId, Runner runner) {
+        if (runners.containsKey(runner.getName())) {
+            updateRunnerMarker(runner);
+        } else {
+            createRunnerMarker(runner);
+        }
+    }
+
+    private void createRunnerMarker(Runner runner) {
+        LatLng location = runner.getLocation().toLatLng();
+        MarkerOptions markerOption = new MarkerOptions().position(location).title(runner.getName()).icon(getBitmapDescriptor());
+        Marker marker = mMap.addMarker(markerOption);
+        marker.showInfoWindow();
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+        runners.put(runner.getName(), marker);
+    }
+
+    @NonNull
+    private BitmapDescriptor getBitmapDescriptor() {
+        Drawable drawable = getResources().getDrawable(R.drawable.ic_runner, getTheme());
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
+    }
+
+    private void updateRunnerMarker(Runner runner) {
+        LatLng location = runner.getLocation().toLatLng();
+        Marker marker = runners.get(runner.getName());
+        marker.showInfoWindow();
+        marker.setPosition(location);
+        marker.setTitle(runner.getName());
+    }
+
 
     public static class RunnersFragment extends Fragment {
 
         private String raceId;
         private RecyclerView runnersRV;
-        private HashMap<String, Marker> runners;
 
         public RunnersFragment() {
         }
 
-        public static RunnersFragment newInstance(String raceId, HashMap<String, Marker> runners) {
+        public static RunnersFragment newInstance(String raceId) {
             RunnersFragment fragment = new RunnersFragment();
             Bundle args = new Bundle();
             args.putString(TrackatonConstant.RACE_ID, raceId);
-            args.putSerializable(TrackatonConstant.RUNNERS, runners);
             fragment.setArguments(args);
             return fragment;
         }
@@ -84,7 +135,6 @@ public class RaceActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_race_runners, container, false);
             raceId = getArguments().getString(TrackatonConstant.RACE_ID);
-            runners = (HashMap<String, Marker>) getArguments().getSerializable(TrackatonConstant.RUNNERS);
             setRecyclerView(rootView);
             return rootView;
         }
@@ -98,12 +148,8 @@ public class RaceActivity extends AppCompatActivity {
 
             Firebase.allRunners(raceId, trackers -> {
                 RecycleViewRunnerAdapter adapter = new RecycleViewRunnerAdapter(trackers, (runnerId, runner) -> {
-                    Marker marker = runners.get(runner.getName());
-                    if (marker != null) {
-                        marker.showInfoWindow();
-                        // mMap.moveCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
-                        // mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-                    }
+                    RaceActivity activity = (RaceActivity) getActivity();
+                    activity.findInMap(runnerId, runner);
                 });
                 runnersRV.setAdapter(adapter);
             });
@@ -113,18 +159,15 @@ public class RaceActivity extends AppCompatActivity {
 
     public static class MapViewFragment extends Fragment {
 
-        private GoogleMap mMap;
         private String raceId;
-        private HashMap<String, Marker> runners;
 
         public MapViewFragment() {
         }
 
-        public static MapViewFragment newInstance(String raceId, HashMap<String, Marker> runners) {
+        public static MapViewFragment newInstance(String raceId) {
             MapViewFragment fragment = new MapViewFragment();
             Bundle args = new Bundle();
             args.putString(TrackatonConstant.RACE_ID, raceId);
-            args.putSerializable(TrackatonConstant.RUNNERS, runners);
             fragment.setArguments(args);
             return fragment;
         }
@@ -133,7 +176,6 @@ public class RaceActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_race_map, container, false);
             raceId = getArguments().getString(TrackatonConstant.RACE_ID);
-            runners = (HashMap<String, Marker>) getArguments().getSerializable(TrackatonConstant.RUNNERS);
             setMapView(rootView, savedInstanceState);
             return rootView;
         }
@@ -148,61 +190,29 @@ public class RaceActivity extends AppCompatActivity {
                 uiSettings.setZoomControlsEnabled(true);
                 uiSettings.setCompassEnabled(true);
 
-                mMap = googleMap;
+                RaceActivity activity = (RaceActivity) getActivity();
+                activity.setGoogleMap(googleMap);
                 Firebase.raceUpdates(raceId, (runnerId, runner) -> {
-                    if (runners.containsKey(runner.getName())) {
-                        updateRunnerMarker(runner);
-                    } else {
-                        createRunnerMarker(runner);
-                    }
+                    activity.update(runnerId, runner);
                 });
             });
-        }
-        private void createRunnerMarker(Runner runner) {
-            LatLng location = runner.getLocation().toLatLng();
-            MarkerOptions markerOption = new MarkerOptions().position(location).title(runner.getName()).icon(getBitmapDescriptor());
-            Marker marker = mMap.addMarker(markerOption);
-            marker.showInfoWindow();
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-            runners.put(runner.getName(), marker);
-        }
-
-        @NonNull
-        private BitmapDescriptor getBitmapDescriptor() {
-            Drawable drawable = getResources().getDrawable(R.drawable.ic_runner, getActivity().getTheme());
-            Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-            Canvas canvas = new Canvas(bitmap);
-            drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-            drawable.draw(canvas);
-            return BitmapDescriptorFactory.fromBitmap(bitmap);
-        }
-
-        private void updateRunnerMarker(Runner runner) {
-            LatLng location = runner.getLocation().toLatLng();
-            Marker marker = runners.get(runner.getName());
-            marker.showInfoWindow();
-            marker.setPosition(location);
-            marker.setTitle(runner.getName());
         }
     }
 
     private class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         private String raceId;
-        private HashMap<String, Marker> runners;
 
-        SectionsPagerAdapter(FragmentManager fm, String raceId, HashMap<String, Marker> runners) {
+        SectionsPagerAdapter(FragmentManager fm, String raceId) {
             super(fm);
             this.raceId = raceId;
-            this.runners = runners;
         }
 
         @Override
         public Fragment getItem(int position) {
             return position == 0
-                    ? MapViewFragment.newInstance(raceId, runners)
-                    : RunnersFragment.newInstance(raceId, runners);
+                    ? MapViewFragment.newInstance(raceId)
+                    : RunnersFragment.newInstance(raceId);
         }
 
         @Override
