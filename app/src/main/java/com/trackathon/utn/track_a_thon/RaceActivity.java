@@ -47,6 +47,7 @@ public class RaceActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String raceId = intent.getStringExtra(TrackatonConstant.RACE_ID);
+        String raceName = intent.getStringExtra(TrackatonConstant.RACE_NAME);
 
         SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), raceId, runners);
 
@@ -55,6 +56,8 @@ public class RaceActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+        setTitle(getString(R.string.title_activity_map, raceName));
 
     }
 
