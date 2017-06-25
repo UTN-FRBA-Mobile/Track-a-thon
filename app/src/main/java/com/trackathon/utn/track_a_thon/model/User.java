@@ -2,6 +2,8 @@ package com.trackathon.utn.track_a_thon.model;
 
 public class User {
 
+    static final long serialVersionUID = 0L;
+
     private static User CurrentUser = null;
     private static User USAIN_BOLT = new User() {{
         setName("Usain Bolt");

@@ -1,11 +1,7 @@
 package com.trackathon.utn.track_a_thon.firebase;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
-import com.google.firebase.database.ValueEventListener;
 import com.trackathon.utn.track_a_thon.model.Race;
 import com.trackathon.utn.track_a_thon.model.Runner;
 import com.trackathon.utn.track_a_thon.model.RunnerLocation;
