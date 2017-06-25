@@ -134,12 +134,14 @@ public class RaceActivity extends AppCompatActivity {
             View rootView = inflater.inflate(R.layout.fragment_race_map, container, false);
             raceId = getArguments().getString(TrackatonConstant.RACE_ID);
             runners = (HashMap<String, Marker>) getArguments().getSerializable(TrackatonConstant.RUNNERS);
-            setMapView(rootView);
+            setMapView(rootView, savedInstanceState);
             return rootView;
         }
 
-        private void setMapView(View rootView) {
+        private void setMapView(View rootView, Bundle savedInstanceState) {
             MapView mapView = (MapView) rootView.findViewById(R.id.map);
+            mapView.onCreate(savedInstanceState);
+            mapView.onResume();
             mapView.getMapAsync((googleMap) -> {
                 UiSettings uiSettings = googleMap.getUiSettings();
 
