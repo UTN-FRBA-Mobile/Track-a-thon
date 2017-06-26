@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.login.LoginManager;
 import com.squareup.picasso.Picasso;
 import com.trackathon.utn.track_a_thon.model.User;
 
@@ -97,7 +98,11 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void logout() {
-
+        LoginManager.getInstance().logOut();
+        User.setCurrentUser(null);
+        Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private Button btnWatchers;
