@@ -56,10 +56,6 @@
         <activity
             android:name=".TrackingActivity"
             android:label="@string/title_activity_tracking" />
-        <activity
-            android:name=".MapsActivity"
-            android:label="@string/title_activity_map"
-            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".HomeActivity"
