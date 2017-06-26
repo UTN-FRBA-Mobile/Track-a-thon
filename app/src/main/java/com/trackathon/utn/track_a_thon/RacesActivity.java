@@ -28,7 +28,7 @@ public class RacesActivity extends AppCompatActivity {
         setComponentsBinding();
         nextActivity = getIntent().getExtras().getBoolean(TrackatonConstant.IS_TRACKER)
                 ? TrackingActivity.class
-                : MapsActivity.class;
+                : RaceActivity.class;
     }
 
     @Override

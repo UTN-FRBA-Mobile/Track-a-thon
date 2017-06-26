@@ -31,6 +31,10 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
         <activity
             android:name=".RacesActivity"
             android:label="@string/title_activity_races" />
@@ -57,6 +61,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".RaceActivity"
+            android:label="@string/title_activity_race"
+            android:theme="@style/AppTheme.NoActionBar" />
+
     </application>
 
 </manifest>
