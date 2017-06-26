@@ -18,6 +18,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.trackathon.utn.track_a_thon.firebase.Firebase;
+import com.trackathon.utn.track_a_thon.model.Runner;
 import com.trackathon.utn.track_a_thon.model.RunnerLocation;
 
 import java.math.RoundingMode;
@@ -49,7 +50,6 @@ public class LocationReporterService extends Service {
 
     private String raceId;
     private String runnerId;
-    private String runnerName;
     private DecimalFormat speedFormat;
     private Location lastLocation;
     private Float accumulatedDistance;
@@ -94,19 +94,18 @@ public class LocationReporterService extends Service {
         return baseNotificationMessage() + "\nSpeed: " + speedFormat.format(speed);
     }
 
-    public void start(String raceId, String raceName, String runnerName) {
+    public void start(String raceId) {
         this.raceId = raceId;
-        this.runnerName = runnerName;
         setUpStats();
-        addRaceRunner();
+        getRunnerId();
         toastNotification("Service started");
         popUpPersistentNotification();
         registerLocationListener();
         startNotificationUpdater();
     }
 
-    private void addRaceRunner() {
-        this.runnerId = Firebase.registerRunner(raceId, runnerName);
+    private void getRunnerId() {
+        this.runnerId = Firebase.registerRunner(raceId);
     }
 
     private void setUpStats() {
@@ -132,7 +131,7 @@ public class LocationReporterService extends Service {
         locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
                 Log.d("LocationReporterService", location.toString());
-                Firebase.setNewLocation(raceId, runnerId, RunnerLocation.from(location));
+                Firebase.setRunner(raceId, runnerId, Runner.from(location));
                 if (lastLocation == null) {
                     lastLocation = location;
                 } else {

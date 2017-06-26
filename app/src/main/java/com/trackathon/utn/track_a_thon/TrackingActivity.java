@@ -73,7 +73,7 @@ public class TrackingActivity extends AppCompatActivity {
             trackButton.setText(R.string.start);
             started = false;
         } else {
-            trackingService.start(raceId, raceName, "Usain Bolt");
+            trackingService.start(raceId);
             trackButton.setText(R.string.stop);
             started = true;
         }

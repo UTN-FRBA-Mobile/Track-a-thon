@@ -21,15 +21,12 @@ public class Firebase {
         runnersRef(raceId).addValueEventListener(new RunnerValueEventListener(callback));
     }
 
-    public static void setNewLocation(String raceId, String runnerId, RunnerLocation newLocation) {
-        DatabaseReference runnerRef = runnerRef(raceId, runnerId);
-        runnerRef.child("location").setValue(newLocation);
+    public static void setRunner(String raceId, String runnerId, Runner runner) {
+        runnerRef(raceId, runnerId).setValue(runner);
     }
 
-    public static String registerRunner(String raceId, String runnerName) {
-        String runnerId = runnersRef(raceId).push().getKey();
-        runnerRef(raceId, runnerId).child("name").setValue(runnerName);
-        return runnerId;
+    public static String registerRunner(String raceId) {
+        return runnersRef(raceId).push().getKey();
     }
 
     public static void unregisterRunner(String race, String runner) {
