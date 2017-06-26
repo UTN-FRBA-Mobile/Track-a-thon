@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/email_login_form"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@android:color/white"
-    android:fitsSystemWindows="true">
+    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+    android:layout_marginRight="@dimen/activity_horizontal_margin">
 
-    <ScrollView
-        android:id="@+id/login_form"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-        <LinearLayout
-            android:id="@+id/email_login_form"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:orientation="vertical"
-            android:weightSum="1">
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_marginStart="75dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="20dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                android:src="@mipmap/logo_login" />
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/logo_login"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.136"
+        android:contentDescription="@string/app_name" />
 
 
-            <com.facebook.login.widget.LoginButton
-                xmlns:facebook="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/login_button"
-                facebook:com_facebook_login_text="Login con Facebook"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent" />
+    <com.facebook.login.widget.LoginButton
+        xmlns:facebook="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/login_button"
+        facebook:com_facebook_login_text="Login con Facebook"
+        android:layout_height="128dp"
+        android:layout_width="258dp"
+        android:layout_marginTop="8dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        facebook:layout_constraintTop_toBottomOf="@+id/imageView"
+        facebook:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
+        facebook:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        facebook:layout_constraintLeft_toLeftOf="parent" />
 
-        </LinearLayout>
-
-    </ScrollView>
-
-</LinearLayout>
-
-
+</android.support.constraint.ConstraintLayout>
