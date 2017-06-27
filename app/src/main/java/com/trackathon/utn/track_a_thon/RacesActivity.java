@@ -78,7 +78,7 @@ public class RacesActivity extends AppCompatActivity {
             RecycleViewRaceAdapter adapter = new RecycleViewRaceAdapter(races, (raceId, race) -> {
                 Intent intent = new Intent(RacesActivity.this, nextActivity);
                 intent.putExtra(TrackatonConstant.RACE_ID, raceId);
-                intent.putExtra(TrackatonConstant.RACE_NAME, race.getName());
+                intent.putExtra(TrackatonConstant.RACE, race);
                 startActivity(intent);
             });
             racesWatchers.setAdapter(adapter);

@@ -4,7 +4,12 @@ import android.location.Location;
 
 import com.google.android.gms.maps.model.LatLng;
 
-public class GPSLocation {
+import java.io.Serializable;
+
+public class GPSLocation implements Serializable {
+
+    static final long serialVersionUID = 3L;
+
     private Double latitude;
 
     private Double longitude;

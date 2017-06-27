@@ -3,6 +3,7 @@ package com.trackathon.utn.track_a_thon;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -34,13 +35,17 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.trackathon.utn.track_a_thon.firebase.Firebase;
+import com.trackathon.utn.track_a_thon.model.GPSLocation;
+import com.trackathon.utn.track_a_thon.model.Race;
 import com.trackathon.utn.track_a_thon.model.Runner;
 
 import java.util.HashMap;
 
 public class RaceActivity extends AppCompatActivity {
 
+    private Race race;
     private GoogleMap mMap;
     private HashMap<String, Marker> runners = new HashMap<>();
 
@@ -55,8 +60,8 @@ public class RaceActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
+        race = (Race) intent.getSerializableExtra(TrackatonConstant.RACE);
         String raceId = intent.getStringExtra(TrackatonConstant.RACE_ID);
-        String raceName = intent.getStringExtra(TrackatonConstant.RACE_NAME);
 
         SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), raceId);
 
@@ -66,7 +71,7 @@ public class RaceActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        setTitle(getString(R.string.title_activity_map, raceName));
+        setTitle(getString(R.string.title_activity_map, race.getName()));
 
     }
 
@@ -84,6 +89,13 @@ public class RaceActivity extends AppCompatActivity {
         this.mMap = googleMap;
     }
 
+    private void renderRace() {
+        PolylineOptions polylineOptions = new PolylineOptions();
+        polylineOptions.width(10).color(Color.RED);
+        race.getPoints().forEach((point) -> polylineOptions.add(point.toLatLng()));
+        mMap.addPolyline(polylineOptions);
+    }
+
     private void update(String runnerId, Runner runner) {
         if (runners.containsKey(runner.getName())) {
             updateRunnerMarker(runner);
@@ -97,8 +109,6 @@ public class RaceActivity extends AppCompatActivity {
         MarkerOptions markerOption = new MarkerOptions().position(location).title(runner.getName()).icon(getBitmapDescriptor());
         Marker marker = mMap.addMarker(markerOption);
         marker.showInfoWindow();
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
         runners.put(runner.getName(), marker);
     }
 
@@ -222,13 +232,15 @@ public class RaceActivity extends AppCompatActivity {
 
                 uiSettings.setZoomControlsEnabled(true);
                 uiSettings.setCompassEnabled(true);
-
                 RaceActivity activity = (RaceActivity) getActivity();
                 activity.setGoogleMap(googleMap);
-                Firebase.raceUpdates(raceId, (runnerId, runner) -> {
-                    activity.update(runnerId, runner);
-                });
+                activity.renderRace();
+                renderRunners(activity);
             });
+        }
+
+        private void renderRunners(RaceActivity activity) {
+            Firebase.raceUpdates(raceId, activity::update);
         }
     }
 
