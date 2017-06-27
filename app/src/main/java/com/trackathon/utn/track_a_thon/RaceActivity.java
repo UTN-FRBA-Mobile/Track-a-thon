@@ -33,6 +33,7 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -80,7 +81,7 @@ public class RaceActivity extends AppCompatActivity {
         if (marker != null) {
             marker.showInfoWindow();
             mMap.moveCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
         }
         mViewPager.setCurrentItem(0, true);
     }
@@ -91,9 +92,16 @@ public class RaceActivity extends AppCompatActivity {
 
     private void renderRace() {
         PolylineOptions polylineOptions = new PolylineOptions();
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+
         polylineOptions.width(10).color(Color.RED);
-        race.getPoints().forEach((point) -> polylineOptions.add(point.toLatLng()));
+        race.getPoints().forEach((point) -> {
+            LatLng latLng = point.toLatLng();
+            polylineOptions.add(latLng);
+            builder.include(latLng);
+        });
         mMap.addPolyline(polylineOptions);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 18));
     }
 
     private void update(String runnerId, Runner runner) {
