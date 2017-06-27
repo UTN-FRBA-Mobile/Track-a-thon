@@ -6,22 +6,22 @@ public class Runner extends User {
 
     static final long serialVersionUID = 1L;
 
-    private RunnerLocation location;
+    private GPSLocation location;
 
     public Runner() {}
 
-    public RunnerLocation getLocation() {
+    public GPSLocation getLocation() {
         return location;
     }
 
-    public void setLocation(RunnerLocation location) {
+    public void setLocation(GPSLocation location) {
         this.location = location;
     }
 
     public static Runner from(Location location) {
         User user = User.getCurrentUser();
         Runner runner = new Runner();
-        runner.setLocation(RunnerLocation.from(location));
+        runner.setLocation(GPSLocation.from(location));
         runner.setName(user.getName());
         runner.setEmail(user.getEmail());
         runner.setImageUrl(user.getImageUrl());

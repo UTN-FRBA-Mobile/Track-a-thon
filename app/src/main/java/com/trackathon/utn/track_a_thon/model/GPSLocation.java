@@ -4,12 +4,12 @@ import android.location.Location;
 
 import com.google.android.gms.maps.model.LatLng;
 
-public class RunnerLocation {
+public class GPSLocation {
     private Double latitude;
 
     private Double longitude;
 
-    public RunnerLocation() {
+    public GPSLocation() {
     }
 
     public Double getLatitude() {
@@ -32,10 +32,10 @@ public class RunnerLocation {
         return new LatLng(getLatitude(), getLongitude());
     }
 
-    public static RunnerLocation from(Location location) {
-        RunnerLocation runnerLocation = new RunnerLocation();
-        runnerLocation.setLatitude(location.getLatitude());
-        runnerLocation.setLongitude(location.getLongitude());
-        return runnerLocation;
+    public static GPSLocation from(Location location) {
+        GPSLocation gpsLocation = new GPSLocation();
+        gpsLocation.setLatitude(location.getLatitude());
+        gpsLocation.setLongitude(location.getLongitude());
+        return gpsLocation;
     }
 }
