@@ -144,7 +144,7 @@ public class RaceActivity extends AppCompatActivity {
         Projection projection = mMap.getProjection();
         Point startPoint = projection.toScreenLocation(marker.getPosition());
         LatLng startLatLng = projection.fromScreenLocation(startPoint);
-        Long duration = 1000L;
+        Long duration = 2000L;
 
         final Interpolator interpolator = new LinearInterpolator();
 
