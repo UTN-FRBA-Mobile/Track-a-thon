@@ -55,6 +55,7 @@ public class RaceActivity extends AppCompatActivity {
     private GoogleMap mMap;
     private HashMap<String, Marker> runners = new HashMap<>();
     private Polyline raceTrack;
+    private Boolean updateMapPosition = true;
 
     private ViewPager mViewPager;
 
@@ -135,7 +136,10 @@ public class RaceActivity extends AppCompatActivity {
             builder.include(latLng);
         });
         raceTrack = mMap.addPolyline(polylineOptions);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 18));
+        if (updateMapPosition) {
+            mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 18));
+            updateMapPosition = !updateMapPosition;
+        }
     }
 
     private void update(String runnerId, Runner runner) {
