@@ -19,9 +19,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
@@ -38,6 +40,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.trackathon.utn.track_a_thon.firebase.Firebase;
 import com.trackathon.utn.track_a_thon.model.GPSLocation;
@@ -51,6 +54,7 @@ public class RaceActivity extends AppCompatActivity {
     private Race race;
     private GoogleMap mMap;
     private HashMap<String, Marker> runners = new HashMap<>();
+    private Polyline raceTrack;
 
     private ViewPager mViewPager;
 
@@ -58,7 +62,28 @@ public class RaceActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.map_menu, menu);
+        MenuItem item = menu.findItem(R.id.show_track);
+        item.setChecked(true);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.show_track:
+                Boolean newState = !item.isChecked();
+                item.setChecked(newState);
+                show_track_changed(newState);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void show_track_changed(Boolean show) {
+        if (show) {
+            renderRace();
+        } else {
+            raceTrack.remove();
+        }
     }
 
     @Override
@@ -109,7 +134,7 @@ public class RaceActivity extends AppCompatActivity {
             polylineOptions.add(latLng);
             builder.include(latLng);
         });
-        mMap.addPolyline(polylineOptions);
+        raceTrack = mMap.addPolyline(polylineOptions);
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 18));
     }
 
