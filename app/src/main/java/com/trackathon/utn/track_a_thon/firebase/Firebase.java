@@ -4,7 +4,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.trackathon.utn.track_a_thon.model.Race;
 import com.trackathon.utn.track_a_thon.model.Runner;
-import com.trackathon.utn.track_a_thon.model.RunnerLocation;
 
 import java.util.HashMap;
 import java.util.function.BiConsumer;

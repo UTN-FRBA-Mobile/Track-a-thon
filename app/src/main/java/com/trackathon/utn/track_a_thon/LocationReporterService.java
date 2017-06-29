@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 import com.trackathon.utn.track_a_thon.firebase.Firebase;
 import com.trackathon.utn.track_a_thon.model.Runner;
-import com.trackathon.utn.track_a_thon.model.RunnerLocation;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;

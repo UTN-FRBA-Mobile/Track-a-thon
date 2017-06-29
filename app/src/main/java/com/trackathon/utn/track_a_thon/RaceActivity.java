@@ -3,6 +3,7 @@ package com.trackathon.utn.track_a_thon;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -18,7 +19,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
@@ -32,19 +37,55 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.trackathon.utn.track_a_thon.firebase.Firebase;
+import com.trackathon.utn.track_a_thon.model.GPSLocation;
+import com.trackathon.utn.track_a_thon.model.Race;
 import com.trackathon.utn.track_a_thon.model.Runner;
 
 import java.util.HashMap;
 
 public class RaceActivity extends AppCompatActivity {
 
+    private Race race;
     private GoogleMap mMap;
     private HashMap<String, Marker> runners = new HashMap<>();
+    private Polyline raceTrack;
+    private Boolean updateMapPosition = true;
 
     private ViewPager mViewPager;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.map_menu, menu);
+        MenuItem item = menu.findItem(R.id.show_track);
+        item.setChecked(true);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.show_track:
+                Boolean newState = !item.isChecked();
+                item.setChecked(newState);
+                show_track_changed(newState);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void show_track_changed(Boolean show) {
+        if (show) {
+            renderRace();
+        } else {
+            raceTrack.remove();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +96,8 @@ public class RaceActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
+        race = (Race) intent.getSerializableExtra(TrackatonConstant.RACE);
         String raceId = intent.getStringExtra(TrackatonConstant.RACE_ID);
-        String raceName = intent.getStringExtra(TrackatonConstant.RACE_NAME);
 
         SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), raceId);
 
@@ -66,7 +107,7 @@ public class RaceActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        setTitle(getString(R.string.title_activity_map, raceName));
+        setTitle(getString(R.string.title_activity_map, race.getName()));
 
     }
 
@@ -75,13 +116,30 @@ public class RaceActivity extends AppCompatActivity {
         if (marker != null) {
             marker.showInfoWindow();
             mMap.moveCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
         }
         mViewPager.setCurrentItem(0, true);
     }
 
     public void setGoogleMap(GoogleMap googleMap) {
         this.mMap = googleMap;
+    }
+
+    private void renderRace() {
+        PolylineOptions polylineOptions = new PolylineOptions();
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+
+        polylineOptions.width(10).color(Color.RED);
+        race.getPoints().forEach((point) -> {
+            LatLng latLng = point.toLatLng();
+            polylineOptions.add(latLng);
+            builder.include(latLng);
+        });
+        raceTrack = mMap.addPolyline(polylineOptions);
+        if (updateMapPosition) {
+            mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 18));
+            updateMapPosition = !updateMapPosition;
+        }
     }
 
     private void update(String runnerId, Runner runner) {
@@ -97,8 +155,6 @@ public class RaceActivity extends AppCompatActivity {
         MarkerOptions markerOption = new MarkerOptions().position(location).title(runner.getName()).icon(getBitmapDescriptor());
         Marker marker = mMap.addMarker(markerOption);
         marker.showInfoWindow();
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
         runners.put(runner.getName(), marker);
     }
 
@@ -126,7 +182,7 @@ public class RaceActivity extends AppCompatActivity {
         Projection projection = mMap.getProjection();
         Point startPoint = projection.toScreenLocation(marker.getPosition());
         LatLng startLatLng = projection.fromScreenLocation(startPoint);
-        Long duration = 1000L;
+        Long duration = 2000L;
 
         final Interpolator interpolator = new LinearInterpolator();
 
@@ -222,13 +278,15 @@ public class RaceActivity extends AppCompatActivity {
 
                 uiSettings.setZoomControlsEnabled(true);
                 uiSettings.setCompassEnabled(true);
-
                 RaceActivity activity = (RaceActivity) getActivity();
                 activity.setGoogleMap(googleMap);
-                Firebase.raceUpdates(raceId, (runnerId, runner) -> {
-                    activity.update(runnerId, runner);
-                });
+                activity.renderRace();
+                renderRunners(activity);
             });
+        }
+
+        private void renderRunners(RaceActivity activity) {
+            Firebase.raceUpdates(raceId, activity::update);
         }
     }
 
