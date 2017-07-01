@@ -107,6 +107,17 @@ public class LocationReporterService extends Service {
         startNotificationUpdater();
     }
 
+    public void stop() {
+        if (isTracking) {
+            removeRunnerFromRace();
+            removePersistentNotification();
+            toastNotification("Service stopped");
+            removeLocationListener();
+            stopScheduledUpdates();
+            isTracking = false;
+        }
+    }
+
     private void getRunnerId() {
         this.runnerId = Firebase.registerRunner(raceId);
     }
@@ -169,16 +180,6 @@ public class LocationReporterService extends Service {
         Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
     }
 
-    public void stop() {
-        if (isTracking) {
-            removeRunnerFromRace();
-            removePersistentNotification();
-            toastNotification("Service stopped");
-            removeLocationListener();
-            stopScheduledUpdates();
-        }
-        stopSelf();
-    }
 
     private void removeRunnerFromRace() {
         Firebase.unregisterRunner(raceId, runnerId);

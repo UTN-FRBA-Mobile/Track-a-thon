@@ -67,12 +67,17 @@ public class TrackingActivity extends AppCompatActivity {
 
     private void changeTracking() {
         if (trackingService.isTracking) {
-            trackingService.start(raceId);
-            trackButton.setText(R.string.stop);
-        } else {
             trackingService.stop();
-            trackButton.setText(R.string.start);
+        } else {
+            trackingService.start(raceId);
         }
+
+        updateButtonText();
+    }
+
+    private void updateButtonText() {
+        Integer text = trackingService.isTracking ? R.string.stop : R.string.start;
+        trackButton.setText(text);
     }
 
     private void bindTrackingService() {
@@ -90,6 +95,7 @@ public class TrackingActivity extends AppCompatActivity {
         public void onServiceConnected(ComponentName name, IBinder service) {
             LocationReporterService.ServiceBinder binder = (LocationReporterService.ServiceBinder) service;
             trackingService = binder.getService();
+            updateButtonText();
             trackButton.setOnClickListener((view) -> changeTracking());
         }
 
