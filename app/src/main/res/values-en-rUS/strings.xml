@@ -24,4 +24,8 @@
     <string name="map">Map</string>
     <string name="runners">Runners</string>
     <string name="race_draw_action">Show race track</string>
+
+    <string name="distance">Distance:</string>
+    <string name="max_speed">Max speed:</string>
+    <string name="speed">Speed:</string>
 </resources>

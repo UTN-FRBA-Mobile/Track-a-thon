@@ -24,4 +24,8 @@
     <string name="map">Karte</string>
     <string name="runners">Läufer</string>
     <string name="race_draw_action">Rennstrecke anzeigen</string>
+
+    <string name="distance">Entfernung:</string>
+    <string name="max_speed">Maximale Geschwindigkeit:</string>
+    <string name="speed">Geschwindigkeit:</string>
 </resources>

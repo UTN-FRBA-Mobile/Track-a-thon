@@ -19,11 +19,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.trackathon.utn.track_a_thon.firebase.Firebase;
-import com.trackathon.utn.track_a_thon.formatter.SpeedFormatter;
+import com.trackathon.utn.track_a_thon.formatter.Formatter;
 import com.trackathon.utn.track_a_thon.model.Runner;
 
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.concurrent.TimeUnit;
 
 public class LocationReporterService extends Service {
@@ -91,7 +89,7 @@ public class LocationReporterService extends Service {
     }
 
     private String speedLabel(Float speed) {
-        return baseNotificationMessage() + "\nSpeed: " + SpeedFormatter.format(speed);
+        return baseNotificationMessage() + "\nSpeed: " + Formatter.format(speed, "#.## m/s");
     }
 
     public void start(String raceId) {
