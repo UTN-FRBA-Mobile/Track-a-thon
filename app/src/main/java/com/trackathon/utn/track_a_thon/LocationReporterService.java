@@ -54,6 +54,7 @@ public class LocationReporterService extends Service {
     private Location lastLocation;
     private Float accumulatedDistance;
     private Long startTime;
+    private Float maxSpeed;
     public Boolean isTracking;
 
     @Override
@@ -71,6 +72,7 @@ public class LocationReporterService extends Service {
             }
         };
 
+        maxSpeed = 0f;
         speedFormat = new DecimalFormat("#.## m/s");
         speedFormat.setRoundingMode(RoundingMode.CEILING);
 
@@ -133,7 +135,9 @@ public class LocationReporterService extends Service {
     }
 
     private Float averageSpeed() {
-        return accumulatedDistance / (currentTime() - startTime);
+        Float speed = accumulatedDistance / (currentTime() - startTime);
+        maxSpeed = Math.max(speed, maxSpeed);
+        return speed;
     }
 
     private void updatePersistentNotificationSpeed() {
@@ -145,7 +149,7 @@ public class LocationReporterService extends Service {
         locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
                 Log.d("LocationReporterService", location.toString());
-                Firebase.setRunner(raceId, runnerId, Runner.from(location));
+                Firebase.setRunner(raceId, runnerId, Runner.from(location, accumulatedDistance, averageSpeed(), maxSpeed));
                 if (lastLocation == null) {
                     lastLocation = location;
                 } else {
