@@ -17,12 +17,12 @@ import java.util.function.BiConsumer;
 class RecycleViewRunnerAdapter extends RecyclerView.Adapter<RunnerViewHolder> {
 
     private BiConsumer<String, Runner> onClick;
-    private HashMap<String, Runner> races;
+    private HashMap<String, Runner> runners;
     private List<String> keys;
 
     RecycleViewRunnerAdapter(HashMap<String, Runner> runners, BiConsumer<String, Runner> onClick) {
-        this.keys = new ArrayList<>(runners.keySet());
-        this.races = runners;
+        this.runners = runners != null ? runners : new HashMap<>();
+        this.keys = new ArrayList<>(this.runners.keySet());
         this.onClick = onClick;
     }
 
@@ -35,7 +35,7 @@ class RecycleViewRunnerAdapter extends RecyclerView.Adapter<RunnerViewHolder> {
     @Override
     public void onBindViewHolder(RunnerViewHolder runnerViewHolder, int position) {
         String runnerId = this.keys.get(position);
-        Runner runner = this.races.get(runnerId);
+        Runner runner = this.runners.get(runnerId);
 
         runnerViewHolder.getRunnerName().setText(runner.getName());
         runnerViewHolder.getRunnerPhoto().setImageResource(R.drawable.ic_race);
@@ -52,7 +52,7 @@ class RecycleViewRunnerAdapter extends RecyclerView.Adapter<RunnerViewHolder> {
 
     @Override
     public int getItemCount() {
-        return races.size();
+        return runners.size();
     }
 
 }
