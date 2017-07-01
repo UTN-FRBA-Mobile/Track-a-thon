@@ -4,6 +4,7 @@ import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -54,6 +55,7 @@ public class LocationReporterService extends Service {
     private Location lastLocation;
     private Float accumulatedDistance;
     private Long startTime;
+    private Float maxSpeed;
     public Boolean isTracking;
 
     @Override
@@ -86,7 +88,6 @@ public class LocationReporterService extends Service {
         this.isTracking = false;
     }
 
-
     @NonNull
     private String baseNotificationMessage() {
         return "Your location is being tracked.";
@@ -100,7 +101,7 @@ public class LocationReporterService extends Service {
         this.raceId = raceId;
         this.isTracking = true;
         setUpStats();
-        getRunnerId();
+        setRunnerId();
         toastNotification(getString(R.string.service_started));
         popUpPersistentNotification();
         registerLocationListener();
@@ -118,14 +119,20 @@ public class LocationReporterService extends Service {
         }
     }
 
-    private void getRunnerId() {
-        this.runnerId = Firebase.registerRunner(raceId);
+    private void setRunnerId() {
+        SharedPreferences preferences = getSharedPreferences(getApplicationContext().getPackageName(), Context.MODE_PRIVATE);
+        this.runnerId = preferences.getString(TrackatonConstant.RUNNER_ID, Firebase.registerRunner(raceId));
+        if (!preferences.contains(TrackatonConstant.RUNNER_ID)) {
+            preferences.edit().putString(TrackatonConstant.RUNNER_ID, this.runnerId).commit();
+        }
     }
+
 
     private void setUpStats() {
         startTime = currentTime();
         accumulatedDistance = 0f;
         lastLocation = null;
+        maxSpeed = 0f;
     }
 
     private void startNotificationUpdater() {
@@ -133,7 +140,10 @@ public class LocationReporterService extends Service {
     }
 
     private Float averageSpeed() {
-        return accumulatedDistance / (currentTime() - startTime);
+        long elapsedTime = currentTime() - startTime;
+        Float speed = elapsedTime <= 0 ? 0f : accumulatedDistance / elapsedTime;
+        maxSpeed = Math.max(speed, maxSpeed);
+        return speed;
     }
 
     private void updatePersistentNotificationSpeed() {
@@ -145,7 +155,7 @@ public class LocationReporterService extends Service {
         locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
                 Log.d("LocationReporterService", location.toString());
-                Firebase.setRunner(raceId, runnerId, Runner.from(location));
+                Firebase.setRunner(raceId, runnerId, Runner.from(location, accumulatedDistance, averageSpeed(), maxSpeed));
                 if (lastLocation == null) {
                     lastLocation = location;
                 } else {

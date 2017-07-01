@@ -41,6 +41,7 @@ public class TrackingActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     public void onBackPressed() {
         unbindTrackingService();
