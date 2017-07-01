@@ -19,7 +19,6 @@ public class TrackingActivity extends AppCompatActivity {
 
 
     Button trackButton;
-    Boolean started = false;
     LocationReporterService trackingService;
     private String raceName;
     private String raceId;
@@ -30,7 +29,6 @@ public class TrackingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tracking);
         trackButton = (Button) findViewById(R.id.trackButton);
-        trackButton.setText(R.string.start);
         Intent intent = this.getIntent();
 
         raceName = intent.getExtras().getString(TrackatonConstant.RACE_NAME);
@@ -67,16 +65,19 @@ public class TrackingActivity extends AppCompatActivity {
         }
     }
 
-    private void startTracking() {
-        if (started) {
+    private void changeTracking() {
+        if (trackingService.isTracking) {
             trackingService.stop();
-            trackButton.setText(R.string.start);
-            started = false;
         } else {
             trackingService.start(raceId);
-            trackButton.setText(R.string.stop);
-            started = true;
         }
+
+        updateButtonText();
+    }
+
+    private void updateButtonText() {
+        Integer text = trackingService.isTracking ? R.string.stop : R.string.start;
+        trackButton.setText(text);
     }
 
     private void bindTrackingService() {
@@ -94,7 +95,8 @@ public class TrackingActivity extends AppCompatActivity {
         public void onServiceConnected(ComponentName name, IBinder service) {
             LocationReporterService.ServiceBinder binder = (LocationReporterService.ServiceBinder) service;
             trackingService = binder.getService();
-            trackButton.setOnClickListener((view) -> startTracking());
+            updateButtonText();
+            trackButton.setOnClickListener((view) -> changeTracking());
         }
 
         @Override
