@@ -72,7 +72,6 @@ public class LocationReporterService extends Service {
             }
         };
 
-        maxSpeed = 0f;
         speedFormat = new DecimalFormat("#.## m/s");
         speedFormat.setRoundingMode(RoundingMode.CEILING);
 
@@ -128,6 +127,7 @@ public class LocationReporterService extends Service {
         startTime = currentTime();
         accumulatedDistance = 0f;
         lastLocation = null;
+        maxSpeed = 0f;
     }
 
     private void startNotificationUpdater() {
@@ -135,7 +135,8 @@ public class LocationReporterService extends Service {
     }
 
     private Float averageSpeed() {
-        Float speed = accumulatedDistance / (currentTime() - startTime);
+        long elapsedTime = currentTime() - startTime;
+        Float speed = elapsedTime <= 0 ? 0f : accumulatedDistance / elapsedTime;
         maxSpeed = Math.max(speed, maxSpeed);
         return speed;
     }
