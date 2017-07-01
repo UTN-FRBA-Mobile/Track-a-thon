@@ -1,5 +1,7 @@
 package com.trackathon.utn.track_a_thon;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
 
 class RecycleViewRunnerAdapter extends RecyclerView.Adapter<RunnerViewHolder> {
 
@@ -21,9 +24,10 @@ class RecycleViewRunnerAdapter extends RecyclerView.Adapter<RunnerViewHolder> {
     private HashMap<String, Runner> runners;
     private List<String> keys;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     RecycleViewRunnerAdapter(HashMap<String, Runner> runners, BiConsumer<String, Runner> onClick) {
         this.runners = runners != null ? runners : new HashMap<>();
-        this.keys = new ArrayList<>(this.runners.keySet());
+        this.keys = new ArrayList<>(this.runners.keySet().stream().sorted((runnerId1, runnerId2) -> runners.get(runnerId2).getAccumulatedDistance().compareTo(runners.get(runnerId1).getAccumulatedDistance())).collect(Collectors.toList()));
         this.onClick = onClick;
     }
 
