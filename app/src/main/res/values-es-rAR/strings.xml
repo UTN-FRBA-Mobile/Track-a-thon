@@ -24,4 +24,9 @@
     <string name="map">Mapa</string>
     <string name="runners">Corredores</string>
     <string name="race_draw_action">Mostrar circuito</string>
+
+    <string name="distance">Distancia:</string>
+    <string name="max_speed">Máxima velocidad:</string>
+    <string name="speed">Velocidad:</string>
+
 </resources>

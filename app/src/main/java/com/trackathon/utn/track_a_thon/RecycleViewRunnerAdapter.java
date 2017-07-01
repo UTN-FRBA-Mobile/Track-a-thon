@@ -39,9 +39,9 @@ class RecycleViewRunnerAdapter extends RecyclerView.Adapter<RunnerViewHolder> {
         Runner runner = this.runners.get(runnerId);
 
         runnerViewHolder.getRunnerName().setText(runner.getName());
-        runnerViewHolder.getRunnerSpeed().setText(Formatter.format(runner.getCurrentSpeed(), "Speed: #.## m/s"));
-        runnerViewHolder.getRunnerMaxSpeed().setText(Formatter.format(runner.getMaxSpeed(), "Max Speed: #.## m/s"));
-        runnerViewHolder.getRunnerAccumulatedDistance().setText(Formatter.format(runner.getAccumulatedDistance() / 1000, "Accumulated distance: #.## km"));
+        runnerViewHolder.getRunnerSpeed().setText(Formatter.format(runner.getCurrentSpeed(), "#.## m/s"));
+        runnerViewHolder.getRunnerMaxSpeed().setText(Formatter.format(runner.getMaxSpeed(), "#.## m/s"));
+        runnerViewHolder.getRunnerAccumulatedDistance().setText(Formatter.format(runner.getAccumulatedDistance() / 1000, "#.## km"));
         runnerViewHolder.getRunnerPhoto().setImageResource(R.drawable.ic_race);
         Picasso.with(runnerViewHolder.getCardView().getContext()).load(runner.getImageUrl()).into(runnerViewHolder.getRunnerPhoto());
 

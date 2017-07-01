@@ -53,47 +53,86 @@
                     android:textSize="18sp"
                     android:lines="1"
                     android:scrollHorizontally="true"
-                    android:ellipsize="end"
-                    android:text="Federico Alfredo Scarpa"/>
+                    android:ellipsize="end"/>
 
-                <TextView
-                    android:id="@+id/runner_speed"
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_height="wrap_content"
-                    android:gravity="start|top"
-                    android:textSize="15sp"
-                    android:lines="1"
-                    android:scrollHorizontally="true"
-                    android:ellipsize="end"
-                    android:text="Speed: 50m/s"/>
+                    android:layout_width="wrap_content">
 
-                <TextView
-                    android:id="@+id/runner_max_speed"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="start|top"
-                    android:textSize="15sp"
-                    android:lines="1"
-                    android:scrollHorizontally="true"
-                    android:ellipsize="end"
-                    android:text="Max speed: 50m/s"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|top"
+                        android:textSize="15sp"
+                        android:paddingEnd="5dp"
+                        android:text="@string/speed"/>
 
-                <TextView
-                    android:id="@+id/runner_accumulated_distance"
-                    android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/runner_speed"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|top"
+                        android:textSize="15sp"
+                        android:lines="1"
+                        android:scrollHorizontally="true"
+                        android:ellipsize="end"/>
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_height="wrap_content"
-                    android:gravity="start|top"
-                    android:textSize="15sp"
-                    android:lines="1"
-                    android:scrollHorizontally="true"
-                    android:ellipsize="end"
-                    android:text="Distance: 50m/s"/>
+                    android:layout_width="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|top"
+                        android:textSize="15sp"
+                        android:paddingEnd="5dp"
+                        android:text="@string/max_speed"/>
+
+                    <TextView
+                        android:id="@+id/runner_max_speed"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|top"
+                        android:textSize="15sp"
+                        android:lines="1"
+                        android:scrollHorizontally="true"
+                        android:ellipsize="end"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|top"
+                        android:textSize="15sp"
+                        android:paddingEnd="5dp"
+                        android:text="@string/distance"/>
+
+                    <TextView
+                        android:id="@+id/runner_accumulated_distance"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|top"
+                        android:textSize="15sp"
+                        android:lines="1"
+                        android:scrollHorizontally="true"
+                        android:ellipsize="end"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
-
-
 
     </android.support.v7.widget.CardView>
 
