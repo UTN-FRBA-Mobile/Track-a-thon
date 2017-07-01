@@ -9,4 +9,5 @@ public class TrackatonConstant {
     public static final String IS_TRACKER = "IS_TRACKER";
 
     public static final String RUNNERS = "RUNNERS";
+    public static final String RUNNER_ID = "RUNNER_ID";
 }
