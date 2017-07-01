@@ -106,6 +106,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:visibility="invisible"
                     android:orientation="horizontal"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content">
@@ -132,18 +133,13 @@
 
             </LinearLayout>
 
-            <com.mikhaellopez.circularimageview.CircularImageView
+            <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:id="@+id/runner_position"
-                android:src="@drawable/ic_race"
+                android:src="@drawable/first"
                 android:layout_gravity="center_vertical"
-                app:civ_border="true"
-                app:civ_border_color="#DDDDDD"
-                app:civ_border_width="2dp"
-                app:civ_shadow_color="#000000"
-                app:civ_shadow_radius="10"
-                app:civ_shadow="true"
+                android:scaleType="fitCenter"
                 />
 
         </LinearLayout>
