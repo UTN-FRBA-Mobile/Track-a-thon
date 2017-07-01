@@ -11,12 +11,18 @@ import com.trackathon.utn.track_a_thon.R;
 public class RunnerViewHolder extends RecyclerView.ViewHolder {
     private CardView cardView;
     private TextView runnerName;
+    private TextView runnerSpeed;
     private ImageView runnerPhoto;
+    private TextView runnerMaxSpeed;
+    private TextView runnerAccumulatedDistance;
 
     public RunnerViewHolder(View itemView) {
         super(itemView);
         cardView = (CardView) itemView.findViewById(R.id.cv);
         runnerName = (TextView) itemView.findViewById(R.id.runner_name);
+        runnerSpeed = (TextView) itemView.findViewById(R.id.runner_speed);
+        runnerMaxSpeed = (TextView) itemView.findViewById(R.id.runner_max_speed);
+        runnerAccumulatedDistance = (TextView) itemView.findViewById(R.id.runner_accumulated_distance);
         runnerPhoto = (ImageView) itemView.findViewById(R.id.runner_photo);
     }
 
@@ -28,8 +34,20 @@ public class RunnerViewHolder extends RecyclerView.ViewHolder {
         return runnerName;
     }
 
+    public TextView getRunnerSpeed() {
+        return runnerSpeed;
+    }
+
     public ImageView getRunnerPhoto() {
         return runnerPhoto;
+    }
+
+    public TextView getRunnerMaxSpeed() {
+        return runnerMaxSpeed;
+    }
+
+    public TextView getRunnerAccumulatedDistance() {
+        return runnerAccumulatedDistance;
     }
 }
 

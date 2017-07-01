@@ -23,8 +23,8 @@
             >
 
             <com.mikhaellopez.circularimageview.CircularImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
                 android:id="@+id/runner_photo"
                 android:src="@drawable/ic_race"
                 android:layout_gravity="center_vertical"
@@ -53,7 +53,41 @@
                     android:textSize="18sp"
                     android:lines="1"
                     android:scrollHorizontally="true"
-                    android:ellipsize="end"/>
+                    android:ellipsize="end"
+                    android:text="Federico Alfredo Scarpa"/>
+
+                <TextView
+                    android:id="@+id/runner_speed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|top"
+                    android:textSize="15sp"
+                    android:lines="1"
+                    android:scrollHorizontally="true"
+                    android:ellipsize="end"
+                    android:text="Speed: 50m/s"/>
+
+                <TextView
+                    android:id="@+id/runner_max_speed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|top"
+                    android:textSize="15sp"
+                    android:lines="1"
+                    android:scrollHorizontally="true"
+                    android:ellipsize="end"
+                    android:text="Max speed: 50m/s"/>
+
+                <TextView
+                    android:id="@+id/runner_accumulated_distance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|top"
+                    android:textSize="15sp"
+                    android:lines="1"
+                    android:scrollHorizontally="true"
+                    android:ellipsize="end"
+                    android:text="Distance: 50m/s"/>
 
             </LinearLayout>
 

@@ -9,6 +9,8 @@ import com.squareup.picasso.Picasso;
 import com.trackathon.utn.track_a_thon.model.Runner;
 import com.trackathon.utn.track_a_thon.model.RunnerViewHolder;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,7 +39,13 @@ class RecycleViewRunnerAdapter extends RecyclerView.Adapter<RunnerViewHolder> {
         String runnerId = this.keys.get(position);
         Runner runner = this.runners.get(runnerId);
 
+        DecimalFormat speedFormat = new DecimalFormat("#.## m/s");
+        speedFormat.setRoundingMode(RoundingMode.CEILING);
+
         runnerViewHolder.getRunnerName().setText(runner.getName());
+        runnerViewHolder.getRunnerSpeed().setText(speedFormat.format(runner.getCurrentSpeed()));
+        runnerViewHolder.getRunnerMaxSpeed().setText(speedFormat.format(runner.getMaxSpeed()));
+        runnerViewHolder.getRunnerAccumulatedDistance().setText(speedFormat.format(runner.getCurrentSpeed()));
         runnerViewHolder.getRunnerPhoto().setImageResource(R.drawable.ic_race);
         Picasso.with(runnerViewHolder.getCardView().getContext()).load(runner.getImageUrl()).into(runnerViewHolder.getRunnerPhoto());
 
