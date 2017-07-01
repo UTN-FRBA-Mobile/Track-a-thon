@@ -47,10 +47,29 @@ class RecycleViewRunnerAdapter extends RecyclerView.Adapter<RunnerViewHolder> {
         runnerViewHolder.getRunnerMaxSpeed().setText(Formatter.format(runner.getMaxSpeed(), "#.## m/s"));
         runnerViewHolder.getRunnerAccumulatedDistance().setText(Formatter.format(runner.getAccumulatedDistance() / 1000, "#.## km"));
         runnerViewHolder.getRunnerPhoto().setImageResource(R.drawable.ic_race);
+        runnerViewHolder.getRunnerPositionPhoto().setVisibility(position >= 3 ? View.INVISIBLE : View.VISIBLE);
+        runnerViewHolder.getRunnerPositionPhoto().setImageResource(getPositionImage(position));
         Picasso.with(runnerViewHolder.getCardView().getContext()).load(runner.getImageUrl()).into(runnerViewHolder.getRunnerPhoto());
 
 
         runnerViewHolder.getCardView().setOnClickListener((view) -> this.onClick.accept(runnerId, runner));
+    }
+
+    private int getPositionImage(int position) {
+        switch (position){
+            case 0: {
+                return R.drawable.first;
+            }
+            case 1: {
+                return R.drawable.second;
+            }
+            case 2: {
+                return R.drawable.second;
+            }
+            default: {
+                return R.drawable.first;
+            }
+        }
     }
 
     @Override

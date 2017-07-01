@@ -13,8 +13,10 @@ public class RunnerViewHolder extends RecyclerView.ViewHolder {
     private TextView runnerName;
     private TextView runnerSpeed;
     private ImageView runnerPhoto;
+    private ImageView runnerPositionPhoto;
     private TextView runnerMaxSpeed;
     private TextView runnerAccumulatedDistance;
+
 
     public RunnerViewHolder(View itemView) {
         super(itemView);
@@ -24,8 +26,13 @@ public class RunnerViewHolder extends RecyclerView.ViewHolder {
         runnerMaxSpeed = (TextView) itemView.findViewById(R.id.runner_max_speed);
         runnerAccumulatedDistance = (TextView) itemView.findViewById(R.id.runner_accumulated_distance);
         runnerPhoto = (ImageView) itemView.findViewById(R.id.runner_photo);
+        runnerPositionPhoto = (ImageView) itemView.findViewById(R.id.runner_position);
     }
 
+    public ImageView getRunnerPositionPhoto() {
+        return runnerPositionPhoto;
+    }
+    
     public CardView getCardView() {
         return cardView;
     }
