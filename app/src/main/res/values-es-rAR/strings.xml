@@ -7,8 +7,10 @@
 
     <string name="fetching_races">Buscando carreras disponibles</string>
 
-    <string name="start">Empezar</string>
+    <string name="start">Iniciar</string>
     <string name="stop">Finalizar</string>
+    <string name="service_stopped">Servicio iniciado</string>
+    <string name="service_started">Servicio finalizado</string>
 
     <string name="navigation_drawer_open">Abrir panel lateral</string>
     <string name="navigation_drawer_close">Cerrar panel lateral</string>

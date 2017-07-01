@@ -9,6 +9,8 @@
 
     <string name="start">Start</string>
     <string name="stop">Stop</string>
+    <string name="service_stopped">Service stopped</string>
+    <string name="service_started">Service started</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
