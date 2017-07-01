@@ -1,9 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Trackathon</string>
-
-    <string name="title_activity_home">Trackathon</string>
-    <string name="title_activity_login">Trackathon</string>
-
     <string name="title_activity_map">Race - %1$s</string>
     <string name="title_activity_race">Race</string>
     <string name="title_activity_races">Races</string>
@@ -28,7 +24,4 @@
     <string name="map">Map</string>
     <string name="runners">Runners</string>
     <string name="race_draw_action">Show race track</string>
-
-
-    <string name="facebook_app_id">784933015001729</string>
 </resources>

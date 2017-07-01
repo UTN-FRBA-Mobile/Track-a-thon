@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_activity_map">Rennen - %1$s</string>
+    <string name="title_activity_race">Rennen</string>
+    <string name="title_activity_races">Rennen</string>
+    <string name="title_activity_tracking">Fährtenleser</string>
+
+    <string name="fetching_races">Abrufen von Rennen</string>
+
+    <string name="start">Anfang</string>
+    <string name="stop">Halt</string>
+    <string name="service_stopped">Service gestoppt</string>
+    <string name="service_started">Service wurde gestartet</string>
+
+    <string name="navigation_drawer_open">Öffnen Sie die Schublade</string>
+    <string name="navigation_drawer_close">Schließen Sie die Schublade</string>
+
+    <string name="watchers">Beobachter</string>
+    <string name="trackers">Verfolger</string>
+    <string name="session">Session</string>
+    <string name="sign_out">Ausloggen</string>
+    <string name="search_races_hint">Suche Rennen…</string>
+
+    <string name="map">Karte</string>
+    <string name="runners">Läufer</string>
+    <string name="race_draw_action">Rennstrecke anzeigen</string>
+</resources>

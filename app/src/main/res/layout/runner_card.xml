@@ -51,7 +51,6 @@
                     android:layout_height="wrap_content"
                     android:gravity="start|top"
                     android:textSize="18sp"
-                    android:text="@string/userName"
                     android:lines="1"
                     android:scrollHorizontally="true"
                     android:ellipsize="end"/>

@@ -101,7 +101,7 @@ public class LocationReporterService extends Service {
         this.isTracking = true;
         setUpStats();
         getRunnerId();
-        toastNotification("Service started");
+        toastNotification(getString(R.string.service_started));
         popUpPersistentNotification();
         registerLocationListener();
         startNotificationUpdater();
@@ -111,7 +111,7 @@ public class LocationReporterService extends Service {
         if (isTracking) {
             removeRunnerFromRace();
             removePersistentNotification();
-            toastNotification("Service stopped");
+            toastNotification(getString(R.string.service_stopped));
             removeLocationListener();
             stopScheduledUpdates();
             isTracking = false;
