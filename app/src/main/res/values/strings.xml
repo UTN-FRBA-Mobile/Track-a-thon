@@ -1,36 +1,32 @@
 <resources>
-    <string name="app_name">Track-a-thon</string>
+    <string name="app_name">Trackathon</string>
+
+    <string name="title_activity_home">Trackathon</string>
+    <string name="title_activity_login">Login</string>
     <string name="title_activity_map">Race - %1$s</string>
+    <string name="title_activity_race">Race</string>
     <string name="title_activity_races">Races</string>
     <string name="title_activity_tracking">Tracker</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
-    <string name="userName">Email / UserName</string>
-    <string name="password">Password</string>
-    <string name="action_sign_in_short">Iniciar Sesión</string>
-    <string name="action_sign_in">Login</string>
+
     <string name="fetching_races">Fetching available races</string>
+
     <string name="start">Start</string>
     <string name="stop">Stop</string>
-    <string name="title_activity_home">HomeActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_search">Search Races</string>
+
     <string name="watchers">Watchers</string>
     <string name="trackers">Trackers</string>
-    <string name="app_logo">App logo</string>
     <string name="session">Session</string>
     <string name="sign_out">Sign out</string>
-    <string name="action_search">Search Races</string>
     <string name="search_races_hint">Search Races…</string>
 
-    <string name="facebook_app_id">784933015001729</string>
-    <string name="title_activity_race">RaceActivity</string>
-    <string name="section_format">Hello World from section: %1$d</string>
     <string name="map">Map</string>
     <string name="runners">Runners</string>
     <string name="race_draw_action">Show race track</string>
+
+    <string name="facebook_app_id">784933015001729</string>
 </resources>
