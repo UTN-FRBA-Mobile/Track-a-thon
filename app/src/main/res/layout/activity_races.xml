@@ -6,10 +6,29 @@
     android:layout_height="match_parent"
     tools:context="com.trackathon.utn.track_a_thon.RacesActivity">
 
-
-    <android.support.v7.widget.RecyclerView
+    <FrameLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/races"/>
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/races"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="20dp"
+            android:clickable="true"
+            android:visibility="invisible"
+            android:src="@drawable/ic_add"
+            app:fabSize="normal"
+            app:srcCompat="@color/colorAccent" />
+
+    </FrameLayout>
 
 </LinearLayout>
