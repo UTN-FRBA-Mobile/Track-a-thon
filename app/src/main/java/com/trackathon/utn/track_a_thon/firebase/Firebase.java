@@ -16,6 +16,11 @@ public class Firebase {
         racesRef().addListenerForSingleValueEvent(new RaceEventListener(callback));
     }
 
+    public static void newRace(Race race) {
+        String raceId = racesRef().push().getKey();
+        raceRef(raceId).setValue(race);
+    }
+
     public static void allRunners(String raceId, Consumer<HashMap<String, Runner>> callback) {
         runnersRef(raceId).addValueEventListener(new RunnerValueEventListener(callback));
     }

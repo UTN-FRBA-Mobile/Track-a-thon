@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp">
+
+    <TextView
+        android:id="@+id/TextViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Text"
+        android:textSize="10pt">
+    </TextView>
+
+    <EditText
+        android:id="@+id/EditTextName"
+        android:layout_height="wrap_content"
+        android:hint="Name"
+        android:inputType="text"
+        android:layout_width="fill_parent">
+    </EditText>
+
+    <EditText
+        android:id="@+id/EditTextDistance"
+        android:layout_height="wrap_content"
+        android:hint="Distance"
+        android:inputType="numberDecimal"
+        android:layout_width="fill_parent">
+    </EditText>
+
+    <EditText
+        android:id="@+id/EditTextLocation"
+        android:layout_height="wrap_content"
+        android:hint="Location"
+        android:inputType="text"
+        android:layout_width="fill_parent">
+    </EditText>
+
+    <EditText
+        android:id="@+id/EditTextStartTime"
+        android:layout_height="wrap_content"
+        android:hint="StartTime"
+        android:inputType="text"
+        android:layout_width="fill_parent">
+    </EditText>
+
+    <Button
+        android:id="@+id/ButtonCreate"
+        android:layout_height="wrap_content"
+        android:text="Create"
+        android:layout_gravity="bottom"
+        android:layout_width="fill_parent">
+    </Button>
+
+</LinearLayout>

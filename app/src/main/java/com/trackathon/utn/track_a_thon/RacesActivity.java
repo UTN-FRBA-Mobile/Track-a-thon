@@ -13,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
-import android.support.design.widget.Snackbar;
 
 import com.trackathon.utn.track_a_thon.firebase.Firebase;
 
@@ -37,7 +36,7 @@ public class RacesActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RacesActivity.this, HomeActivity.class);
+                Intent intent = new Intent(RacesActivity.this, NewRaceActivity.class);
                 startActivity(intent);
             }
         });

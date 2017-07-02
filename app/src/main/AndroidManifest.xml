@@ -67,6 +67,11 @@
             android:label="@string/title_activity_race"
             android:theme="@style/AppTheme.NoActionBar" />
 
+        <activity
+            android:name=".NewRaceActivity"
+            android:label="Create Race"
+            android:theme="@style/AppTheme.NoActionBar" />
+
     </application>
 
 </manifest>

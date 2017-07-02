@@ -20,6 +20,13 @@ public class Race implements Serializable {
     public Race() {
     }
 
+    public Race(String name, String location, String distance, String startTime) {
+        this.name = name;
+        this.location = location;
+        this.distance = distance;
+        this.startTime = startTime;
+    }
+
     public String getName() {
         return name;
     }
