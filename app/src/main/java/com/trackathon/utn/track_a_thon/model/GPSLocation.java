@@ -14,6 +14,11 @@ public class GPSLocation implements Serializable {
 
     private Double longitude;
 
+    public GPSLocation(Double latitude, Double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
     public GPSLocation() {
     }
 

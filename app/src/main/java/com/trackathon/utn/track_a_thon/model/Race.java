@@ -20,11 +20,12 @@ public class Race implements Serializable {
     public Race() {
     }
 
-    public Race(String name, String location, String distance, String startTime) {
+    public Race(String name, String location, String distance, String startTime, List<GPSLocation> points) {
         this.name = name;
         this.location = location;
         this.distance = distance;
         this.startTime = startTime;
+        this.points = points;
     }
 
     public String getName() {
