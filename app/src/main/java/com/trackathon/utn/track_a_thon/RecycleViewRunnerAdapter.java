@@ -64,7 +64,7 @@ class RecycleViewRunnerAdapter extends RecyclerView.Adapter<RunnerViewHolder> {
                 return R.drawable.second;
             }
             case 2: {
-                return R.drawable.second;
+                return R.drawable.third;
             }
             default: {
                 return R.drawable.first;
