@@ -37,14 +37,24 @@ public class RacesActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(RacesActivity.this, NewRaceActivity.class);
-                startActivity(intent);
+
+                startActivityForResult(intent, 1);
             }
         });
-        if ( getIntent().getExtras().getBoolean(TrackatonConstant.IS_TRACKER) )
-        {
+        if ( getIntent().getExtras().getBoolean(TrackatonConstant.IS_TRACKER) ) {
             fab.setVisibility(View.VISIBLE); //SHOW the button
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==RESULT_OK){
+            finish();
+            startActivity(getIntent());
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

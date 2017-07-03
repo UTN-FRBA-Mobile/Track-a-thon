@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -28,6 +29,8 @@ public class NewRaceActivity extends AppCompatActivity {
 
     MapFragment mapFragment = new MapFragment();
     List<GPSLocation> points = new ArrayList<>();
+    String distance;
+    TextView textViewMap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,9 +40,10 @@ public class NewRaceActivity extends AppCompatActivity {
         Button btnMap = (Button) findViewById(R.id.ButtonMap);
 
         EditText nameField = (EditText) findViewById(R.id.EditTextName);
-        EditText distanceField = (EditText) findViewById(R.id.EditTextDistance);
         EditText locationField = (EditText) findViewById(R.id.EditTextLocation);
         EditText startTimeField = (EditText) findViewById(R.id.EditTextStartTime);
+
+        textViewMap = (TextView) findViewById(R.id.TextViewMap);
 
 
         //Listener on Submit button
@@ -60,18 +64,27 @@ public class NewRaceActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String name = nameField.getText().toString();
-                String distance = distanceField.getText().toString() + "km";
+//                String distance = distanceField.getText().toString() + "km";
                 String location = locationField.getText().toString();
                 String startTime = startTimeField.getText().toString();
                 Race race = new Race(name, location, distance, startTime, points);
 
                 Firebase.newRace(race);
+
+                setResult(RESULT_OK, null);
+                finish();
             }
         });
     }
 
     public void setPoints(List<GPSLocation> points) {
         this.points = points;
+        textViewMap.setText("Route updated");
+    }
+
+    public void setDistance(float distance) {
+        distance = distance / 1000;
+        this.distance = String.format("%.2f", distance) + "km";
     }
 
     public void removeFragment() {

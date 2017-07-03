@@ -1,6 +1,7 @@
 package com.trackathon.utn.track_a_thon;
 
 import android.graphics.Color;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -37,6 +38,9 @@ public class MapFragment extends Fragment {
     List<GPSLocation> points = new ArrayList<>();
     Double lat;
     Double lng;
+    Location location1 = new Location("");
+    Location location2 = new Location("");
+    float distance = 0;
     MapFragment fragm = this;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,15 +71,19 @@ public class MapFragment extends Fragment {
                 @Override
                 public void onMapClick(LatLng arg0)
                 {
+
+                    if (!(points.isEmpty())) {
+                        location1.setLatitude(lat);
+                        location1.setLongitude(lng);
+                        location2.setLatitude(arg0.latitude);
+                        location2.setLongitude(arg0.longitude);
+                        distance += location1.distanceTo(location2);
+                    }
                     lat = arg0.latitude;
                     lng = arg0.longitude;
+
                     points.add(new GPSLocation(lat, lng));
-                    android.util.Log.i("onMapClick", arg0.toString());
-
-                    /*googleMap.addMarker(new MarkerOptions()
-                            .position(arg0)
-                            .title("Hello world"));*/
-
+                    android.util.Log.i("onMapClick", Float.toString(distance));
 
 
                     polylineOptions.add(arg0);
@@ -103,6 +111,7 @@ public class MapFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ((NewRaceActivity)getActivity()).setPoints(points);
+                ((NewRaceActivity)getActivity()).setDistance(distance);
                 getActivity().getSupportFragmentManager().beginTransaction().remove(fragm).commit();
             }
         });
