@@ -29,9 +29,6 @@ import java.util.Map;
 
 import static com.trackathon.utn.track_a_thon.R.id.mapView;
 
-/**
- * Created by Julian on 2/7/2017.
- */
 
 public class MapFragment extends Fragment {
     MapView mapView;
@@ -78,6 +75,11 @@ public class MapFragment extends Fragment {
                         location2.setLatitude(arg0.latitude);
                         location2.setLongitude(arg0.longitude);
                         distance += location1.distanceTo(location2);
+                    }
+                    else {
+                        googleMap.addMarker(new MarkerOptions()
+                                .position(arg0)
+                                .title("Start"));
                     }
                     lat = arg0.latitude;
                     lng = arg0.longitude;
