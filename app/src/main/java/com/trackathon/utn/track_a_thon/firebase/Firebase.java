@@ -16,6 +16,11 @@ public class Firebase {
         racesRef().addListenerForSingleValueEvent(new RaceEventListener(callback));
     }
 
+    public static void newRace(Race race) {
+        String raceId = racesRef().push().getKey();
+        raceRef(raceId).setValue(race);
+    }
+
     public static void allRunners(String raceId, Consumer<HashMap<String, Runner>> callback) {
         runnersRef(raceId).addValueEventListener(new RunnerValueEventListener(callback));
     }
@@ -37,6 +42,11 @@ public class Firebase {
         runnersRef(race).addChildEventListener(new RunnerEventListener(callback));
     }
 
+    public static void addWatcher(String raceId, String watcherName) {
+        watchersRef(raceId).push();
+}
+
+
 
     private static DatabaseReference racesRef() {
         return FirebaseDatabase.getInstance().getReference().child("races");
@@ -52,5 +62,13 @@ public class Firebase {
 
     private static DatabaseReference runnerRef(String raceId, String runner) {
         return runnersRef(raceId).child(runner);
+    }
+
+    private static DatabaseReference watchersRef(String raceId) {
+        return raceRef(raceId).child("watchers");
+    }
+
+    private static DatabaseReference watcherRef(String raceId, String watcher) {
+        return watchersRef(raceId).child(watcher);
     }
 }

@@ -11,6 +11,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.support.design.widget.FloatingActionButton;
+import android.view.View;
 
 import com.trackathon.utn.track_a_thon.firebase.Firebase;
 
@@ -29,7 +31,30 @@ public class RacesActivity extends AppCompatActivity {
         nextActivity = getIntent().getExtras().getBoolean(TrackatonConstant.IS_TRACKER)
                 ? TrackingActivity.class
                 : RaceActivity.class;
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RacesActivity.this, NewRaceActivity.class);
+
+                startActivityForResult(intent, 1);
+            }
+        });
+        if ( getIntent().getExtras().getBoolean(TrackatonConstant.IS_TRACKER) ) {
+            fab.setVisibility(View.VISIBLE); //SHOW the button
+        }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==RESULT_OK){
+            finish();
+            startActivity(getIntent());
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -76,6 +101,7 @@ public class RacesActivity extends AppCompatActivity {
 
         Firebase.allRaces(races -> {
             RecycleViewRaceAdapter adapter = new RecycleViewRaceAdapter(races, (raceId, race) -> {
+
                 Intent intent = new Intent(RacesActivity.this, nextActivity);
                 intent.putExtra(TrackatonConstant.RACE_ID, raceId);
                 intent.putExtra(TrackatonConstant.RACE, race);
