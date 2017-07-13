@@ -12,6 +12,11 @@ La aplicación estará disponible para la plataforma Android.
 Podes ver los mockups [acá!](https://mockingbot.com/app/PQymgtARUaMoxBBM4FhDp8sGTB6AZOJ#screen=s07944AC2101494248641378)
 
 ![Screenshot](login.jpg)
+![Screenshot](main.jpg)
+![Screenshot](main_2.jpg)
+![Screenshot](watchers.jpg)
+![Screenshot](new_race.jpg)
+![Screenshot](tracker.jpg)
 
 
 
